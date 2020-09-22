@@ -13,8 +13,8 @@ const contentStyle = {
     backgroundSize: 'cover',
   };
 
-function Admin() {
-    return <div className="Admin" >
+function Home() {
+    return <div className="Home" key='home'>
         <Carousel autoplay>
             <div>
                 <img style={contentStyle} src={banner} alt='pic' />
@@ -25,4 +25,4 @@ function Admin() {
         </Carousel>    </div>
 }
 
-export default Admin;
+export default Home;

@@ -1,10 +1,10 @@
 import React from 'react';
 
 
-function Admin() {
-    return <div className="Admin" >
+function Query() {
+    return <div className="Query" key='query'>
         我是guest下的 query
     </div>
 }
 
-export default Admin;
+export default Query;
