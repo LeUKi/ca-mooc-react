@@ -1,0 +1,34 @@
+.Login {
+    background-color: #1C4058;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .bread {
+        width: 270px;
+        height: 240px;
+        background-color: rgba($color: #fff, $alpha: 0.3);
+
+        .title {
+            color: #fff;
+            font-size: 150%;
+        }
+    }
+}
+
+.login-form {
+    max-width: 280px;
+}
+
+.login-form-forgot {
+    float: right;
+}
+
+.ant-col-rtl .login-form-forgot {
+    float: left;
+}
+
+.login-form-button {
+    width: 100%;
+}
