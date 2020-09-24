@@ -5,7 +5,6 @@ import { UserOutlined, LockOutlined, HomeOutlined } from '@ant-design/icons';
 import axios from 'axios'
 
 
-
 class Login extends React.Component {
   componentDidMount() {
     if (!(sessionStorage.token === undefined)) {
@@ -14,23 +13,16 @@ class Login extends React.Component {
   }
   that = this;
   onFinish = values => {
-
-    // Send a POST request
-    console.log(values);
     axios({
       method: 'post',
       url: `http://118.178.125.139:8060/adminLogin?password=${values.password}&username=${values.username}`,
       headers: { 'Content-Type': 'application/json', }
     }).then((response) => {
       sessionStorage.token = response.data.extended.token;
-
       this.props.history.push('/admin')
       message.success('登入成功');
-
     }).catch(function (error) {
-      message.error('登陆失败');
-      console.log(error);
-
+      message.error(error);
     });
   };
 

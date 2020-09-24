@@ -5,10 +5,8 @@ import Rtr from './router'
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  
-    <Rtr />
-  ,
-  document.getElementById('root')
+    <Rtr /> 
+  ,document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
