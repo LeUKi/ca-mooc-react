@@ -7,14 +7,21 @@
 
     .bread {
         width: 270px;
-        height: 240px;
-        background-color: rgba(255 , 255, 255, 0.3);
+        height: 250px;
+        background-color: rgba(255, 255, 255, 0.3);
         border-radius: 5px;
 
         .title {
             color: #fff;
             font-size: 150%;
+            margin-bottom: 10px;
+
+            Button {
+                float: right;
+                margin: 5px 0;
+            }
         }
+
     }
 }
 

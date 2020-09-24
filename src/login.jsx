@@ -1,12 +1,17 @@
 import React from 'react';
 import './login.scss'
 import { Form, Input, Button, Card, message } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, HomeOutlined } from '@ant-design/icons';
 import axios from 'axios'
 
 
 
 class Login extends React.Component {
+  componentDidMount() {
+    if (!(sessionStorage.token === undefined)) {
+      this.props.history.push('/admin')
+    }
+  }
   that = this;
   onFinish = values => {
 
@@ -17,7 +22,7 @@ class Login extends React.Component {
       url: `http://118.178.125.139:8060/adminLogin?password=${values.password}&username=${values.username}`,
       headers: { 'Content-Type': 'application/json', }
     }).then((response) => {
-      localStorage.token = response.data.extended.token;
+      sessionStorage.token = response.data.extended.token;
 
       this.props.history.push('/admin')
       message.success('登入成功');
@@ -34,8 +39,13 @@ class Login extends React.Component {
 
       < div className="Login noselect" >
         <Card className={'bread'}>
-          <span className={'title'}>后台登入</span>
+          <div className={'title'}> <span>后台登入</span>
+            <Button size={"small"} icon={<HomeOutlined />} onClick={() => {
+              this.props.history.push('/')
+            }}>
 
+            </Button>
+          </div>
           <Form
             name="normal_login"
             className="login-form"
