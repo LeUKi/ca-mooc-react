@@ -10,11 +10,20 @@ class Query extends React.Component {
         myDATA: []
     }
     getDATA() {
-        axios.get('http://118.178.125.139:8060/guest/introduce/find',).then(
+        axios.get('http://118.178.125.139:8060/guest/onlineClass/findAll?page=0&size=999',).then(
             res => {
-                const getdata = res.data.extended.Introduce;
-                const temp =[]
-                temp.push()
+                const getdata = res.data.extended.OnlineClasss.content;
+                const temp = []
+                getdata.map((item, index) => {
+                    temp.push(
+                        <TabPane tab={item.ocid} key={index}>
+                            <div>
+                                
+                            </div>
+                        </TabPane>
+                    )
+                })
+
 
                 this.setState({
                     myDATA: []
