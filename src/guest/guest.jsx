@@ -19,7 +19,7 @@ import {
   HomeOutlined,
 
 } from '@ant-design/icons';
-import locale from 'antd/lib/date-picker/locale/en_US';
+//import locale from 'antd/lib/date-picker/locale/en_US';
 
 const history = createBrowserHistory()
 
@@ -87,8 +87,6 @@ class Sider extends React.Component {
   }
 }
 
-
-
 class Guest extends React.Component {
   render() {
     return <div className="Guest" >
@@ -100,8 +98,6 @@ class Guest extends React.Component {
       </div>
 
       <Sider />
-
-
 
       <Router history={history}>
         <Switch>
@@ -116,6 +112,8 @@ class Guest extends React.Component {
           </Route>
         </Switch>
       </Router>
+
+      {/* <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer> */}
     </div>
 
   }

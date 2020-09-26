@@ -8,3 +8,8 @@
 .test {
     background-color: chartreuse;
 }
+
+.root{
+    background-color: #F0F2F5;
+    height: 100%;
+}
