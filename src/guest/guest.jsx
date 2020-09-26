@@ -9,7 +9,7 @@ import Query from './query'
 import { createBrowserHistory } from 'history'
 import 'antd/dist/antd.css'
 
-import { Button, Menu, Tooltip,Affix } from 'antd';
+import { Button, Menu, Tooltip, Affix } from 'antd';
 import {
   PlaySquareOutlined,
   CheckSquareOutlined,
@@ -17,7 +17,7 @@ import {
   TeamOutlined,
   CommentOutlined,
   HomeOutlined,
-
+  BookOutlined
 } from '@ant-design/icons';
 //import locale from 'antd/lib/date-picker/locale/en_US';
 
@@ -72,6 +72,7 @@ class Sider extends React.Component {
           <Menu.Item key="1" icon={<HomeOutlined />}><Link to={'/guest/home'}>首 页</Link></Menu.Item>
           <Menu.Item key="2" icon={<PlaySquareOutlined />}><Link to={'/guest/wlk'}>网络课</Link></Menu.Item>
           <Menu.Item key="3" icon={<CheckSquareOutlined />}><Link to={'/guest/zxpc'}>在线测评</Link></Menu.Item>
+          <Menu.Item key="4" icon={<BookOutlined />}><Link to={'/guest/kc'}>课 程</Link></Menu.Item>
           <Menu.Item key="4" icon={<AudioOutlined />}><Link to={'/guest/jz'}>讲 座</Link></Menu.Item>
           <Menu.Item key="5" icon={<TeamOutlined />}><Link to={'/guest/sjjx'}>实践教学</Link></Menu.Item>
           <Menu.Item key="6" icon={<CommentOutlined />}><Link to={'/guest/hdjl'}>互动交流</Link></Menu.Item>
@@ -90,14 +91,14 @@ class Sider extends React.Component {
 class Guest extends React.Component {
   render() {
     return <div className="Guest" >
-      
-        <div className='banner noselect'>
-          <div className='text'>
-            <span className='text1'>电路分析</span>
-            <span className='text2'>精品课程</span>
-          </div>
+
+      <div className='banner noselect'>
+        <div className='text'>
+          <span className='text1'>电路分析</span>
+          <span className='text2'>精品课程</span>
         </div>
-        <Affix offsetTop={0}>
+      </div>
+      <Affix offsetTop={0}>
         <Sider />
       </Affix>
       <Router history={history}>
@@ -105,6 +106,7 @@ class Guest extends React.Component {
           <Route path={"/guest/hdjl"} component={Communication}></Route>
           <Route path={"/guest/home"} component={Home}></Route>
           <Route path={"/guest/wlk"} component={Query}></Route>
+          <Route path={"/guest/kc"} component={Query}></Route>
           <Route path={"/guest/zxpc"} component={Query}></Route>
           <Route path={"/guest/jz"} component={Query}></Route>
           <Route path={"/guest/sjjx"} component={Query}></Route>

@@ -61,8 +61,8 @@ class Home extends React.Component {
         return <div className="Home" key={new Date()}>
             <Card hoverable={true} className={'C1'} title={this.state.JJlist[0]}>
                 <Carousel className={'Car'} autoplay>
-                    <div>
-                        <h3 style={contentStyle}>1</h3>
+                    <div style={contentStyle}>
+                        <img src="https://pic.lafish.fun/20200926215138.png" />
                     </div>
                     <div>
                         <h3 style={contentStyle}>2</h3>
@@ -71,8 +71,9 @@ class Home extends React.Component {
                         <h3 style={contentStyle}>3</h3>
                     </div>
                 </Carousel>
+                <br />
                 <p>{this.state.JJlist[1]}</p>
-                <p style={{ float: "right" }}>{this.state.JJlist[2]}</p>
+                <p style={{ float: "right", marginBottom: 0 }}>{this.state.JJlist[2]}</p>
             </Card>
             <Card hoverable={true} className={'C1'} title="公告">
                 {this.state.GGlist}
