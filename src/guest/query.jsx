@@ -6,6 +6,8 @@ const { TabPane } = Tabs;
 
 class Query extends React.Component {
 
+    
+
     render() {
         return <div className="Query" key='query'>
             <Card className={'C1'}>

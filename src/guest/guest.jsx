@@ -9,7 +9,7 @@ import Query from './query'
 import { createBrowserHistory } from 'history'
 import 'antd/dist/antd.css'
 
-import { Button, Menu, Tooltip } from 'antd';
+import { Button, Menu, Tooltip,Affix } from 'antd';
 import {
   PlaySquareOutlined,
   CheckSquareOutlined,
@@ -90,15 +90,16 @@ class Sider extends React.Component {
 class Guest extends React.Component {
   render() {
     return <div className="Guest" >
-      <div className='banner noselect'>
-        <div className='text'>
-          <span className='text1'>电路分析</span>
-          <span className='text2'>精品课程</span>
+      
+        <div className='banner noselect'>
+          <div className='text'>
+            <span className='text1'>电路分析</span>
+            <span className='text2'>精品课程</span>
+          </div>
         </div>
-      </div>
-
-      <Sider />
-
+        <Affix offsetTop={0}>
+        <Sider />
+      </Affix>
       <Router history={history}>
         <Switch>
           <Route path={"/guest/hdjl"} component={Communication}></Route>
