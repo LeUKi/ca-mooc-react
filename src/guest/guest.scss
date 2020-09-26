@@ -51,23 +51,28 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    ;
     flex-wrap: wrap;
-
 
     .C1 {
         margin: 10px;
         width: 400px;
-
         background-color: rgba(255, 255, 255, 0.7);
         border-radius: 7px;
-
-        // .ant-card-body {
-        //     padding: 10px;
-        // }
-
-        .Car {}
     }
+}
 
-
+.Query{
+    background-color: #F0F2F5;
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    .C1{
+        margin: 10px;
+        width: 1000px;
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 7px;
+    }
 }

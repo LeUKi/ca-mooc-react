@@ -12,31 +12,6 @@ const contentStyle = {
     textAlign: 'center',
     background: '#364d79',
 };
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
-
-// async function getGG() {
-//     var returnGG;
-//     await axios.get(`http://118.178.125.139:8060/guest/notice/findAll?page=0&size=999`,
-//         { headers: { 'Content-Type': 'application/json', } }).then(
-//             res => {
-//                 console.log(res);
-//                 console.log(res.data.extended.notices.content[0]);
-//                 const GGlist = res.data.extended.notices.content;
-//                 GGlist.map((GG, index) => {
-//                     return <Panel header={GG.notice_title} key={index}>
-//                         <p>{GG.notice_destination}</p>
-//                     </Panel>
-//                 })
-//             }
-
-//         )
-//         console.log(returnGG);
-//     return returnGG;
-// }
 
 class Home extends React.Component {
     state = {
