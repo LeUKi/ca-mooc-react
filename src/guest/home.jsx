@@ -38,6 +38,7 @@ class Home extends React.Component {
                     this.setState({
                         GGlist: temp
                     });
+                    return ''
                 })
             }
 
@@ -62,13 +63,13 @@ class Home extends React.Component {
             <Card hoverable={true} className={'C1'} title={this.state.JJlist[0]}>
                 <Carousel className={'Car'} autoplay>
                     <div style={contentStyle}>
-                        <img src="https://pic.lafish.fun/20200926215138.png" />
+                        <img src="https://pic.lafish.fun/20200926215138.png" alt='' />
                     </div>
                     <div>
-                        <h3 style={contentStyle}>2</h3>
+                        <img src="https://pic.lafish.fun/20200926215138.png" alt='' />
                     </div>
                     <div>
-                        <h3 style={contentStyle}>3</h3>
+                        <img src="https://pic.lafish.fun/20200926215138.png" alt='' />
                     </div>
                 </Carousel>
                 <br />
