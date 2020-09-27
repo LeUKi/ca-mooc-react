@@ -39,7 +39,7 @@ class Sider extends React.Component {
           size='small'
           ghost
           style={{ float: 'right', margin: '10px' }}
-        ><Link to={'/login'}>后台登入</Link></Button>)
+        ><Link to={'/'}>后台登入</Link></Button>)
     } else {
       return (
         <Tooltip title="您已登入" placement={'bottomRight'} color={'green'}>
@@ -61,8 +61,9 @@ class Sider extends React.Component {
   render() {
     return (
       <div className={'noselect'}>
+
         <Menu
-          style={{ backgroundColor: '#18324d' }}
+          style={{ backgroundColor: '#18324d', textAlign: "center" }}
           theme={this.state.theme}
           onClick={this.handleClick}
           selectedKeys={[this.state.current]}
@@ -76,13 +77,7 @@ class Sider extends React.Component {
           <Menu.Item key="4" icon={<AudioOutlined />}><Link to={'/guest/jz'}>讲 座</Link></Menu.Item>
           <Menu.Item key="5" icon={<TeamOutlined />}><Link to={'/guest/sjjx'}>实践教学</Link></Menu.Item>
           <Menu.Item key="6" icon={<CommentOutlined />}><Link to={'/guest/hdjl'}>互动交流</Link></Menu.Item>
-
-
-
-
-
         </Menu>
-
       </div>
     );
   }
@@ -93,11 +88,13 @@ class Guest extends React.Component {
     return <div className="Guest" >
 
       <div className='banner noselect'>
+
         <div className='text'>
           <span className='text1'>电路分析</span>
           <span className='text2'>精品课程</span>
         </div>
       </div>
+
       <Affix offsetTop={0}>
         <Sider />
       </Affix>

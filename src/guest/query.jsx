@@ -48,19 +48,7 @@ class Query extends React.Component {
                     {this.state.myDATA}
                 </Tabs>
             </Card>
-            <Card hoverable title='在线测评' className={'C1'}>
-                <Tabs tabPosition={"left"}>
-                    {this.state.myDATA}
-                </Tabs>
-            </Card><Card hoverable title='网络课安排' className={'C1'}>
-                <Tabs tabPosition={"left"}>
-                    {this.state.myDATA}
-                </Tabs>
-            </Card><Card hoverable title='网络课安排' className={'C1'}>
-                <Tabs tabPosition={"left"}>
-                    {this.state.myDATA}
-                </Tabs>
-            </Card>
+           
         </div>
     }
 }
