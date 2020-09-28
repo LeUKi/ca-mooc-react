@@ -2,13 +2,13 @@ import React from 'react';
 import { HashRouter as Router, Route, Switch, Redirect, Link } from 'react-router-dom'
 import './guest.scss'
 
-import Communication from './communication'
 import Home from './home'
 import Query from './query'
 import Zxcp from './zxcp'
 import Kc from './kc'
 import Jz from './jz'
 import Sjjx from './sjjx'
+import Hdjl from './hdjl'
 
 import { createBrowserHistory } from 'history'
 import 'antd/dist/antd.css'
@@ -104,7 +104,7 @@ class Guest extends React.Component {
       </Affix>
       <Router history={history}>
         <Switch>
-          <Route path={"/guest/hdjl"} component={Communication}></Route>
+          <Route path={"/guest/hdjl"} component={Hdjl}></Route>
           <Route path={"/guest/home"} component={Home}></Route>
           <Route path={"/guest/wlk"} component={Query}></Route>
           <Route path={"/guest/kc"} component={Kc}></Route>

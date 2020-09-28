@@ -31,7 +31,8 @@ class Query extends React.Component {
                                     <Button shape="round" icon={<VideoCameraOutlined />}>
                                         {item.case_library_video}
                                     </Button>
-                                </a><a target={'_blank'} rel="noopener noreferrer" href={'http://118.178.125.139:8060' + item.case_library_text}>
+                                </a>
+                                <a target={'_blank'} rel="noopener noreferrer" href={'http://118.178.125.139:8060' + item.case_library_text}>
                                     <Button shape="round" icon={<FilePptOutlined />}>
                                         {item.case_library_text}
                                     </Button>
