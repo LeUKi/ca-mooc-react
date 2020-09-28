@@ -1,8 +1,17 @@
 import React from 'react';
-//import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+import { HashRouter as Router, Route, Switch, Redirect, Link } from 'react-router-dom'
 import './admin.scss'
 import { Menu, Layout, Button, message, Tooltip, Affix } from 'antd';
-import { UploadOutlined, UserOutlined, VideoCameraOutlined, LogoutOutlined, HomeOutlined } from '@ant-design/icons';
+import {
+  PlaySquareOutlined,
+  CheckSquareOutlined,
+  AudioOutlined,
+  TeamOutlined,
+  CommentOutlined,
+  HomeOutlined,
+  BookOutlined,
+  LogoutOutlined
+} from '@ant-design/icons';
 const { Header, Content, Footer, Sider } = Layout;
 
 
@@ -36,18 +45,13 @@ class Admin extends React.Component {
             }}
           >
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-              <Menu.Item key="1" icon={<UserOutlined />}>
-                nav 1
-            </Menu.Item>
-              <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-                nav 2
-           </Menu.Item>
-              <Menu.Item key="3" icon={<UploadOutlined />}>
-                nav 3
-            </Menu.Item>
-              <Menu.Item key="4" icon={<UserOutlined />}>
-                nav 4
-            </Menu.Item>
+            <Menu.Item key="1" icon={<HomeOutlined />}><Link to={'/admin/home'}>简介/公告admin</Link></Menu.Item>
+          <Menu.Item key="2" icon={<PlaySquareOutlined />}><Link to={'/admin/wlk'}>网络课</Link></Menu.Item>
+          <Menu.Item key="3" icon={<CheckSquareOutlined />}><Link to={'/admin/zxcp'}>在线测评</Link></Menu.Item>
+          <Menu.Item key="4" icon={<BookOutlined />}><Link to={'/admin/kc'}>课 程</Link></Menu.Item>
+          <Menu.Item key="5" icon={<AudioOutlined />}><Link to={'/admin/jz'}>讲 座</Link></Menu.Item>
+          <Menu.Item key="6" icon={<TeamOutlined />}><Link to={'/admin/sjjx'}>实践教学</Link></Menu.Item>
+          <Menu.Item key="7" icon={<CommentOutlined />}><Link to={'/admin/hdjl'}>互动交流</Link></Menu.Item>
             </Menu>
           </Sider>
         </Affix>

@@ -43,7 +43,7 @@ class Sider extends React.Component {
           size='small'
           ghost
           style={{ float: 'right', margin: '10px' }}
-        ><Link to={'/'}>后台登入</Link></Button>)
+        ><Link to={'/admin'}>后台登入</Link></Button>)
     } else {
       return (
         <Tooltip title="您已登入" placement={'bottomRight'} color={'green'}>
