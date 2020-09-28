@@ -2,7 +2,7 @@ import React from 'react';
 import { Tabs, Card, Button, Tag } from 'antd';
 //import { HashRouter as Link } from 'react-router-dom'
 import axios from 'axios'
-import { LinkOutlined } from '@ant-design/icons';
+import { FileOutlined } from '@ant-design/icons';
 
 const { TabPane } = Tabs;
 
@@ -12,24 +12,24 @@ class Query extends React.Component {
         myDATA: []
     }
     getDATA() {
-        axios.get('http://118.178.125.139:8060/guest/onlineClass/findAll?page=0&size=999',).then(
+        axios.get('http://118.178.125.139:8060/guest/onlineTest/findAll?page=0&size=999',).then(
             res => {
-                const getdata = res.data.extended.OnlineClasss.content;
+                const getdata = res.data.extended.OnlineTests.content;
                 const temp = []
                 getdata.map((item, index) => {
                     temp.push(
-                        <TabPane tab={item.onlineClass_title} key={index}>
+                        <TabPane tab={(item.onlineTest_title).slice(0, 7)} key={index}>
                             <div>
                                 <h3 style={{ textAlign: "center" }}>
-                                    <Tag style={{ float: "right" }}>id:{item.ocid}</Tag>
-                                    {item.onlineClass_title}</h3>
-                                <p>{item.onlineClass_destination}</p>
-                                <a target={'_blank'} rel="noopener noreferrer" href={item.onlineClass_url}>
-                                    <Button shape="round" icon={<LinkOutlined />}>
-                                        {item.onlineClass_url}
+                                    <Tag style={{ float: "right" }}>id:{item.oid}</Tag>
+                                    {item.onlineTest_title}</h3>
+                                <p>{item.onlineTest_destination}</p>
+                                <a target={'_blank'} rel="noopener noreferrer" href={'http://118.178.125.139:8060'+item.onlineTest_url}>
+                                    <Button shape="round" icon={<FileOutlined />}>
+                                        {item.onlineTest_url}
                                     </Button>
                                 </a>
-                                <p style={{ float: "right" }}>{item.onlineClass_time}</p>
+                                <p style={{ float: "right" }}>{item.onlineTest_time}</p>
                             </div>
                         </TabPane>
                     )
@@ -45,7 +45,7 @@ class Query extends React.Component {
     }
     render() {
         return <div className="Query" key='query'>
-            <Card hoverable title='网络课' className={'C1'}>
+            <Card hoverable title='在线测评' className={'C1'}>
                 <Tabs tabPosition={"left"}>
                     {this.state.myDATA}
                 </Tabs>

@@ -5,6 +5,10 @@ import './guest.scss'
 import Communication from './communication'
 import Home from './home'
 import Query from './query'
+import Zxcp from './zxcp'
+import Kc from './kc'
+import Jz from './jz'
+import Sjjx from './sjjx'
 
 import { createBrowserHistory } from 'history'
 import 'antd/dist/antd.css'
@@ -72,11 +76,11 @@ class Sider extends React.Component {
           <this.logInOut />
           <Menu.Item key="1" icon={<HomeOutlined />}><Link to={'/guest/home'}>首 页</Link></Menu.Item>
           <Menu.Item key="2" icon={<PlaySquareOutlined />}><Link to={'/guest/wlk'}>网络课</Link></Menu.Item>
-          <Menu.Item key="3" icon={<CheckSquareOutlined />}><Link to={'/guest/zxpc'}>在线测评</Link></Menu.Item>
+          <Menu.Item key="3" icon={<CheckSquareOutlined />}><Link to={'/guest/zxcp'}>在线测评</Link></Menu.Item>
           <Menu.Item key="4" icon={<BookOutlined />}><Link to={'/guest/kc'}>课 程</Link></Menu.Item>
-          <Menu.Item key="4" icon={<AudioOutlined />}><Link to={'/guest/jz'}>讲 座</Link></Menu.Item>
-          <Menu.Item key="5" icon={<TeamOutlined />}><Link to={'/guest/sjjx'}>实践教学</Link></Menu.Item>
-          <Menu.Item key="6" icon={<CommentOutlined />}><Link to={'/guest/hdjl'}>互动交流</Link></Menu.Item>
+          <Menu.Item key="5" icon={<AudioOutlined />}><Link to={'/guest/jz'}>讲 座</Link></Menu.Item>
+          <Menu.Item key="6" icon={<TeamOutlined />}><Link to={'/guest/sjjx'}>实践教学</Link></Menu.Item>
+          <Menu.Item key="7" icon={<CommentOutlined />}><Link to={'/guest/hdjl'}>互动交流</Link></Menu.Item>
         </Menu>
       </div>
     );
@@ -103,10 +107,10 @@ class Guest extends React.Component {
           <Route path={"/guest/hdjl"} component={Communication}></Route>
           <Route path={"/guest/home"} component={Home}></Route>
           <Route path={"/guest/wlk"} component={Query}></Route>
-          <Route path={"/guest/kc"} component={Query}></Route>
-          <Route path={"/guest/zxpc"} component={Query}></Route>
-          <Route path={"/guest/jz"} component={Query}></Route>
-          <Route path={"/guest/sjjx"} component={Query}></Route>
+          <Route path={"/guest/kc"} component={Kc}></Route>
+          <Route path={"/guest/zxcp"} component={Zxcp}></Route>
+          <Route path={"/guest/jz"} component={Jz}></Route>
+          <Route path={"/guest/sjjx"} component={Sjjx}></Route>
           <Route path={'/guest'}>
             <Redirect to={'/guest/home'}></Redirect>
           </Route>
