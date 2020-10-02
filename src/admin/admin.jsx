@@ -12,6 +12,15 @@ import {
   BookOutlined,
   LogoutOutlined
 } from '@ant-design/icons';
+
+import Home from './home'
+// import Query from './query'
+// import Zxcp from './zxcp'
+import Jz from './jz'
+// import Kc from './kc'
+// import Sjjx from './sjjx'
+// import Hdjl from './hdjl'
+
 const { Header, Content, Footer, Sider } = Layout;
 
 
@@ -45,13 +54,13 @@ class Admin extends React.Component {
             }}
           >
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-            <Menu.Item key="1" icon={<HomeOutlined />}><Link to={'/admin/home'}>简介/公告admin</Link></Menu.Item>
-          <Menu.Item key="2" icon={<PlaySquareOutlined />}><Link to={'/admin/wlk'}>网络课</Link></Menu.Item>
-          <Menu.Item key="3" icon={<CheckSquareOutlined />}><Link to={'/admin/zxcp'}>在线测评</Link></Menu.Item>
-          <Menu.Item key="4" icon={<BookOutlined />}><Link to={'/admin/kc'}>课 程</Link></Menu.Item>
-          <Menu.Item key="5" icon={<AudioOutlined />}><Link to={'/admin/jz'}>讲 座</Link></Menu.Item>
-          <Menu.Item key="6" icon={<TeamOutlined />}><Link to={'/admin/sjjx'}>实践教学</Link></Menu.Item>
-          <Menu.Item key="7" icon={<CommentOutlined />}><Link to={'/admin/hdjl'}>互动交流</Link></Menu.Item>
+              <Menu.Item key="1" icon={<HomeOutlined />}><Link to={'/admin/home'}>简介/公告</Link></Menu.Item>
+              <Menu.Item key="2" icon={<PlaySquareOutlined />}><Link to={'/admin/wlk'}>网络课</Link></Menu.Item>
+              <Menu.Item key="3" icon={<CheckSquareOutlined />}><Link to={'/admin/zxcp'}>在线测评</Link></Menu.Item>
+              <Menu.Item key="4" icon={<BookOutlined />}><Link to={'/admin/kc'}>课 程</Link></Menu.Item>
+              <Menu.Item key="5" icon={<AudioOutlined />}><Link to={'/admin/jz'}>讲 座</Link></Menu.Item>
+              <Menu.Item key="6" icon={<TeamOutlined />}><Link to={'/admin/sjjx'}>实践教学</Link></Menu.Item>
+              <Menu.Item key="7" icon={<CommentOutlined />}><Link to={'/admin/hdjl'}>互动交流</Link></Menu.Item>
             </Menu>
           </Sider>
         </Affix>
@@ -71,37 +80,20 @@ class Admin extends React.Component {
           </Affix>
           <Content style={{ margin: '16px 16px 0', height: '100%' }}>
             <div className="site-layout-background" style={{ padding: 24, minHeight: '100%' }}>
-              <br />123
-              <br />123
-              <br />123
-              <br />123
-              <br />123
-              <br />123
-              <br />123
-              <br />123
-              <br />123
-              <br />123
-              <br />123
-              <br />123
-              <br />123
-              <br />123
-              <br />123
-              <br />123
-              <br />123
-              <br />123
-              <br />123
-              <br />123
-
-              {/* <Router>
+              <Router>
                 <Switch>
-                  <Route path={"/admin/communication"} component></Route>
-                  <Route path={"/admin/home"} component></Route>
-                  <Route path={"/admin/query"} component></Route>
+                  {/* <Route path={"/admin/hdjl"} component={Hdjl}></Route> */}
+                  <Route path={"/admin/home"} component={Home}></Route>
+                  <Route path={"/admin/Jz"} component={Jz}></Route>
+                  {/* <Route path={"/admin/wlk"} component={Query}></Route>
+          <Route path={"/admin/kc"} component={Kc}></Route>
+          <Route path={"/admin/zxcp"} component={Zxcp}></Route>
+          <Route path={"/admin/sjjx"} component={Sjjx}></Route> */}
                   <Route path={'/admin'}>
                     <Redirect to={'/admin/home'}></Redirect>
                   </Route>
                 </Switch>
-              </Router> */}
+              </Router>
             </div>
           </Content>
           <Footer style={{ textAlign: 'center' }}>Ant Design ©2020 电路分析精品课程管理后台</Footer>
