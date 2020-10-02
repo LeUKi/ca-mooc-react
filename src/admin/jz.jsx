@@ -1,3 +1,5 @@
+/* eslint-disable react/no-direct-mutation-state */
+/* eslint-disable array-callback-return */
 import React from 'react';
 import { Table, Button, Modal, Input, message, Popconfirm } from 'antd';
 import axios from 'axios'
@@ -64,10 +66,6 @@ class App extends React.Component {
                             </Popconfirm>
                         </div>)
                     })
-
-
-
-
                 })
                 this.setState({
                     getData: GGafter
@@ -92,9 +90,7 @@ class App extends React.Component {
                         "token": sessionStorage.token
                     }
                 }).then(res => {
-                    this.setState({
-                        Newvisible: false
-                    })
+                    this.handleCancel()
                     message.success('成功添加')
                     this.getDt()
                 })
@@ -102,17 +98,43 @@ class App extends React.Component {
     }
     Edit = (id) => {
         if (this.state.Editvisible === false) {
+            this.state.value_1 = this.state.getData.find(i => i.lid === id).lecture_title
+            this.state.value_2 = this.state.getData.find(i => i.lid === id).lecture_destination
+            this.state.value_3 = id
             this.setState({
                 Editvisible: true
             })
         } else {
-            this.setState({
-                Editvisible: false
-            })
+
+            axios.post('http://118.178.125.139:8060/admin/lecture/update',
+                qs.stringify({
+                    'lecture_destination': this.state.value_2,
+                    'lecture_title': this.state.value_1,
+                    'id': this.state.value_3
+                }),
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'token': sessionStorage.token
+                    }
+                }).then(res => {
+                    this.handleCancel()
+                    message.success('修改成功')
+                    this.getDt()
+                })
         }
     }
     Del = (id) => {
-        message.success(id)
+        axios.delete('http://118.178.125.139:8060/admin/lecture/deleteById?id=' + id,
+            {
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded',
+                    "token": sessionStorage.token
+                }
+            }).then(res => {
+                message.success('成功删除')
+                this.getDt()
+            })
     }
 
     handleCancel = () => {
@@ -165,30 +187,46 @@ class App extends React.Component {
                 bordered={true}
             />
             <Modal
-                title="增"
+                title="新建讲座"
                 visible={this.state.Newvisible}
+                okText='确认新建'
+                cancelText='取消'
                 onOk={this.New}
                 onCancel={this.handleCancel}
             >
                 <TextArea
                     onChange={({ target: { value } }) => { this.state.value_1 = value }}
-                    placeholder='公告标题...'
+                    placeholder='讲座主题...'
                     autoSize>
                 </TextArea>
                 <TextArea
                     onChange={({ target: { value } }) => { this.state.value_2 = value }}
-                    placeholder='公告内容...'
+                    placeholder='讲座内容...'
                     autoSize={{ minRows: 2 }}>
                 </TextArea>
             </Modal>
 
             <Modal
-                title="改"
+                destroyOnClose
+                title="修改讲座"
                 visible={this.state.Editvisible}
+                okText='确认修改'
+                cancelText='取消'
                 onOk={this.Edit}
                 onCancel={this.handleCancel}
             >
-                <p>{}</p>
+                <TextArea
+                    onChange={({ target: { value } }) => { this.state.value_1 = value }}
+                    defaultValue={this.state.value_1}
+                    placeholder='讲座主题...'
+                    autoSize>
+                </TextArea>
+                <TextArea
+                    onChange={({ target: { value } }) => { this.state.value_2 = value }}
+                    defaultValue={this.state.value_2}
+                    placeholder='讲座内容...'
+                    autoSize={{ minRows: 2 }}>
+                </TextArea>
             </Modal>
         </>)
     }

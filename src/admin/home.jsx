@@ -1,156 +1,42 @@
+/* eslint-disable react/no-direct-mutation-state */
+/* eslint-disable array-callback-return */
 import React from 'react';
-import { Card, Input, Button, message, Table, Modal } from 'antd';
+import { Table, Button, Modal, Input, message, Popconfirm } from 'antd';
 import axios from 'axios'
 import qs from 'qs'
 import {
-    PlusOutlined,
     EditOutlined,
-    DeleteOutlined
+    DeleteOutlined,
+    PlusOutlined,
+    QuestionCircleOutlined
 } from '@ant-design/icons';
 const { TextArea } = Input;
 
 
-class Home extends React.Component {
+class App extends React.Component {
     state = {
+        getData: [],
+        Newvisible: false,
+        Editvisible: false,
+        value_1: '',
+        value_2: '',
+        value_3: '',
         JJbefore: '',
         JJafter: '',
-        newcontent1: '',
-        newcontent2: '',
-        Modalwhat: 0,//0新建、1编辑、2删除
-        Modaltitle: '',
-        Modalshow: false,
-        ModalLoading: false,
-        Modalcontent: [],
         GGdata: []
-    };
-
-    onChange = ({ target: { value } }) => {
-        this.setState({ value });
-    };
-
-    Edit = (id) => {
-        this.state.Modalwhat = 1
-
-        this.setState({
-            Modalshow: true
-        })
-        console.log(id);
     }
-    Modalclose = (id) => {
-        this.setState({
-            Modalshow: false
-        })
-        message.success('123')
+    componentWillMount() {
+        this.getDt()
+        this.getJJ()
+
     }
-    Del = (id) => {
-        this.state.Modalwhat = 2
-
-        this.setState({
-            Modalshow: true
-        })
-    }
-    new = () => {
-        this.state.Modaltitle = '新建公告'
-        this.state.Modalcontent =
-            <>
-                <TextArea
-                    onChange={this.state.Changecontent1}
-                    placeholder='公告标题...'
-                    autoSize>
-                </TextArea>
-                <TextArea
-                    onChange={this.state.Changecontent2}
-                    placeholder='公告内容...'
-                    autoSize={{ minRows: 2 }}>
-                </TextArea></>
-
-        this.state.Modalwhat = 0
-        this.setState({
-            Modalshow: true
-        })
-    }
-    Changecontent1 = ({ target: { value } }) => {
-        this.setState({ newcontent1: value });
-    };
-    Changecontent2 = ({ target: { value } }) => {
-        this.setState({ newcontent2: value });
-    };
-    Modalok = () => {
-        if (this.state.Modalwhat === 0) {//新建
-            this.setState({
-                ModalLoading: true
-            })
-            const data = { 'notice_destination': this.state.newcontent2, 'notice_title': this.state.newcontent1 }
-            axios.post('http://118.178.125.139:8060/admin/notice/add', qs.stringify(data), {
-                headers: {
-                    'content-type': 'application/x-www-form-urlencoded',
-                    "token": sessionStorage.token
-                }
-            }).then(res => {
-                this.setState({
-                    ModalLoading: false,
-                    Modalshow: false
-                })
-                message.success('nice')
-                this.getGG()
-            })
-
-        } else if (this.state.Modalwhat === 1) {//编辑
-            message.success('1111')
-
-        } else if (this.state.Modalwhat === 2) {//删除
-            message.success('2222')
-
-        }
-    }
-    getGG() {
-        axios.get('http://118.178.125.139:8060/guest/notice/findAll?page=0&size=99',).then(
-            res => {
-                const GGbefore = res.data.extended.notices.content;
-                const GGafter = []
-                GGbefore.map((GG, index) => {
-                    GGafter.push({
-                        nid: GG.nid,
-                        notice_title: GG.notice_title,
-                        notice_destination: GG.notice_destination,
-                        Actions: (<div key={index}>
-                            <Button
-                                type='primary'
-                                icon={<EditOutlined />}
-                                size='small'
-                                onClick={() => this.Edit(GG.nid)}>
-                                编辑
-                            </Button>
-                            <br />
-                            <Button
-                                type='primary'
-                                danger
-                                icon={<DeleteOutlined />}
-                                size='small'
-                                onClick={() => this.Del(GG.nid)}>
-                                删除
-                            </Button>
-                        </div>)
-                    })
-                    console.log(GGafter);
-                    this.setState({
-                        GGdata: GGafter
-                    });
-                    return ''
-                })
-            }
-        )
-    }
-
-    getJJ() {
+    getJJ = () => {
         axios.get('http://118.178.125.139:8060/guest/introduce/find',).then(
             res => {
                 const JJdata = res.data.extended.Introduce;
-
                 this.setState({
                     JJbefore: JJdata.introduce_destination,
                     JJafter: JJdata.introduce_destination
-
                 })
             }
         )
@@ -166,10 +52,130 @@ class Home extends React.Component {
             message.success('修改成功');
         })
     }
+    getDt = () => {
+        axios.get('http://118.178.125.139:8060/guest/notice/findAll?page=0&size=99',).then(
+            res => {
+                const GGbefore = res.data.extended.notices.content;
+                const GGafter = []
+                GGbefore.map((GG, index) => {
+                    GGafter.push({
+                        key: index,
+                        nid: GG.nid,
+                        notice_title: GG.notice_title,
+                        notice_destination: GG.notice_destination,
+                        notice_time: GG.notice_time,
+                        Actions: (<div>
+                            <Button
+                                type='primary'
+                                icon={<EditOutlined />}
+                                size='small'
+                                onClick={() => this.Edit(GG.nid)}>
+                                编辑
+                            </Button>
+                            <br />
+                            <Popconfirm
+                                title="你确定吗？"
+                                okText='我确定'
+                                cancelText='取消'
+                                okType='danger'
+                                placement='left'
+                                onConfirm={() => this.Del(GG.nid)}
+                                arrowPointAtCenter
+                                icon={<QuestionCircleOutlined
+                                    style={{ color: 'red' }} />}>
+                                <Button
+                                    type='danger'
+                                    icon={<DeleteOutlined />}
+                                    size='small'>
+                                    删除
+                            </Button>
+                            </Popconfirm>
+                        </div>)
+                    })
+                })
+                this.setState({
+                    getData: GGafter
+                });
+            }
+        )
+    }
+    New = () => {
+        if (this.state.Newvisible === false) {
+            this.setState({
+                Newvisible: true
+            })
+        } else {
+            axios.post('http://118.178.125.139:8060/admin/notice/add',
+                qs.stringify({
+                    'notice_title': this.state.value_1,
+                    'notice_destination': this.state.value_2
+                }),
+                {
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded',
+                        "token": sessionStorage.token
+                    }
+                }).then(res => {
+                    this.handleCancel()
+                    message.success('成功添加')
+                    this.getDt()
+                })
+        }
+    }
+    Edit = (id) => {
+        if (this.state.Editvisible === false) {
+            this.setState({
+                value_1: this.state.getData.find(i => i.nid === id).notice_title,
+                value_2: this.state.getData.find(i => i.nid === id).notice_destination,
+                value_3: id
+            }, () => {
+                this.setState({
+                    Editvisible: true
+                })
+            })
 
-    componentWillMount() {
-        this.getJJ();
-        this.getGG()
+            console.log(this.state.getData.find(i => i.nid === id).notice_title);
+            console.log(this.state);
+        } else {
+            axios.post('http://118.178.125.139:8060/admin/notice/update',
+                qs.stringify({
+                    'notice_title': this.state.value_1,
+                    'notice_destination': this.state.value_2,
+                    'id': this.state.value_3
+                }),
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'token': sessionStorage.token
+                    }
+                }).then(res => {
+                    this.handleCancel()
+                    message.success('修改成功')
+                    this.getDt()
+                })
+        }
+    }
+    Del = (id) => {
+        axios.delete('http://118.178.125.139:8060/admin/notice/deleteById?id=' + id,
+            {
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded',
+                    "token": sessionStorage.token
+                }
+            }).then(res => {
+                message.success('成功删除')
+                this.getDt()
+            })
+    }
+
+    handleCancel = () => {
+        this.setState({
+            Newvisible: false,
+            Editvisible: false,
+            value_1: '',
+            value_2: '',
+            value_3: '',
+        })
     }
     render() {
         const columns = [
@@ -181,59 +187,94 @@ class Home extends React.Component {
             {
                 title: '公告标题',
                 dataIndex: 'notice_title',
+                width: '30%'
             },
             {
                 title: '公告内容',
                 dataIndex: 'notice_destination',
-                width: '50%'
+                width: '40%'
+            },
+            {
+                title: '公告时间',
+                dataIndex: 'notice_time',
+                width: '20%'
             }, {
                 title: '操作',
                 dataIndex: 'Actions',
                 width: 1
             },
         ];
-        const { JJafter } = this.state;
-        return <div className="in" key='adminhome'>
-            <Card type='inner'>
-                <h3>修改简介</h3>
-                <TextArea
-                    placeholder="简介信息"
-                    value={JJafter}
-                    onChange={this.onChange}
-                    autoSize />
-                <Button
-                    type="primary"
-                    style={{ float: "right", marginTop: '10px' }}
-                    onClick={this.okJJ}
-                    disabled={this.state.JJafter === this.state.JJbefore}>修改</Button>
-            </Card>
-            <br />
-            <Card type='inner'>
-                <Button
-                    onClick={this.new}
-                    type="primary"
-                    icon={<PlusOutlined />}
-                    style={{ float: "right", marginBottom: '10px' }}>
-                    新建
-                </Button>
-                <h3>修改公告</h3>
-                <Table
-                    dataSource={this.state.GGdata}
-                    columns={columns}
-                    bordered={true}
-                ></Table>
-            </Card>
+        return (<>
+            <h2>修改简介</h2>
+            <TextArea
+                defaultValue={this.state.JJafter}
+                placeholder="简介信息"
+                onChange={({ target: { value } }) => {
+                    this.state.JJafter = value
+                },console.log(this.state.JJafter)}
+                autoSize />
+            <Button
+                type="primary"
+                style={{ float: "right", marginTop: '10px' }}
+                onClick={this.okJJ}
+                disabled={this.state.JJafter === this.state.JJbefore}>修改</Button>
+            <hr style={{ marginTop: 60, marginBottom: 20 }} />
+            <Button
+                onClick={this.New}
+                type="primary"
+                icon={<PlusOutlined />}
+                style={{ float: "right", marginBottom: '10px' }}>
+                新建
+                </Button><h2>修改公告信息</h2>
+            <Table
+                dataSource={this.state.getData}
+                columns={columns}
+                bordered={true}
+            />
             <Modal
-                title={this.state.Modaltitle}
-                visible={this.state.Modalshow}
-                onOk={this.Modalok}
-                confirmLoading={this.state.ModalLoading}
-                onCancel={this.Modalclose}
+                title="新建公告"
+                visible={this.state.Newvisible}
+                okText='确认新建'
+                cancelText='取消'
+                onOk={this.New}
+                onCancel={this.handleCancel}
             >
-                <p>{this.state.Modalcontent}</p>
+                <TextArea
+                    onChange={({ target: { value } }) => { this.state.value_1 = value }}
+                    placeholder='公告标题...'
+                    autoSize>
+                </TextArea>
+                <TextArea
+                    onChange={({ target: { value } }) => { this.state.value_2 = value }}
+                    placeholder='公告内容...'
+                    autoSize={{ minRows: 2 }}>
+                </TextArea>
             </Modal>
-        </div>
+
+            <Modal
+                destroyOnClose
+                title="修改公告"
+                visible={this.state.Editvisible}
+                okText='确认修改'
+                cancelText='取消'
+                onOk={this.Edit}
+                onCancel={this.handleCancel}
+            >
+                <TextArea
+                    onChange={({ target: { value } }) => { this.state.value_1 = value }}
+                    defaultValue={this.state.value_1}
+                    placeholder='公告标题...'
+                    autoSize>
+                </TextArea>
+                <TextArea
+                    onChange={({ target: { value } }) => { this.state.value_2 = value }}
+                    defaultValue={this.state.value_2}
+                    placeholder='公告内容...'
+                    autoSize={{ minRows: 2 }}>
+                </TextArea>
+            </Modal>
+        </>)
     }
 }
 
-export default Home;
+export default App;
