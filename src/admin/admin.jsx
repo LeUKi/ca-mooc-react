@@ -17,7 +17,7 @@ import Home from './home'
 import Zxcp from './zxcp'
 import Wlk from './wlk'
 import Jz from './jz'
-// import Kc from './kc'
+import Kc from './kc'
 import Sjjx from './sjjx'
 // import Hdjl from './hdjl'
 
@@ -88,10 +88,7 @@ class Admin extends React.Component {
                   <Route path={"/admin/wlk"} component={Wlk}></Route>
                   <Route path={"/admin/sjjx"} component={Sjjx}></Route>
                   <Route path={"/admin/zxcp"} component={Zxcp}></Route>
-
-                  {/* 
-          <Route path={"/admin/kc"} component={Kc}></Route>
-           */}
+                  <Route path={"/admin/kc"} component={Kc}></Route>
                   <Route path={'/admin'}>
                     <Redirect to={'/admin/home'}></Redirect>
                   </Route>

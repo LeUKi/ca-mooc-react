@@ -31,24 +31,25 @@ class App extends React.Component {
         this.getDt()
     }
     getDt = () => {
-        axios.get('http://118.178.125.139:8060/guest/onlineTest/findAll?page=0&size=99',).then(
+        axios.get('http://118.178.125.139:8060/guest/case/findAll?page=0&size=99',).then(
             res => {
-                const GGbefore = res.data.extended.OnlineTests.content;
+                const GGbefore = res.data.extended.CaseLibrarys.content;
                 const GGafter = []
                 GGbefore.map((GG, index) => {
                     GGafter.push({
                         key: index,
-                        oid: GG.oid,
-                        onlineTest_title: GG.onlineTest_title,
-                        onlineTest_url: GG.onlineTest_url,
-                        onlineTest_destination: GG.onlineTest_destination,
-                        onlineTest_time: GG.onlineTest_time,
+                        cid: GG.cid,
+                        case_library_title: GG.case_library_title,
+                        case_library_video: GG.case_library_video,
+                        case_library_text: GG.case_library_video,
+                        case_library_destination: GG.case_library_destination,
+                        case_library_time: GG.case_library_time,
                         Actions: (<div>
                             <Button
                                 type='primary'
                                 icon={<EditOutlined />}
                                 size='small'
-                                onClick={() => this.Edit(GG.oid)}>
+                                onClick={() => this.Edit(GG.cid)}>
                                 编辑
                             </Button>
                             <br />
@@ -58,7 +59,7 @@ class App extends React.Component {
                                 cancelText='取消'
                                 okType='danger'
                                 placement='left'
-                                onConfirm={() => this.Del(GG.oid)}
+                                onConfirm={() => this.Del(GG.cid)}
                                 arrowPointAtCenter
                                 icon={<QuestionCircleOutlined
                                     style={{ color: 'red' }} />}>
@@ -85,12 +86,14 @@ class App extends React.Component {
             })
         } else {
             let formData = new FormData();
-            formData.append('onlineTest_title', this.state.value_1)
-            formData.append('onlineTest_destination', this.state.value_2)
-            formData.append('testfile',
-                document.querySelector('input[type="file"]').files[0])
+            formData.append('case_library_title', this.state.value_1)
+            formData.append('case_library_destination', this.state.value_2)
+            formData.append('caseVideo',
+                document.querySelector('input[type="file"]#file1').files[0])
+            formData.append('casePPT',
+                document.querySelector('input[type="file"]#file2').files[0])
 
-            axios.post('http://118.178.125.139:8060/admin/onlineTest/add',
+            axios.post('http://118.178.125.139:8060/admin/case/add',
                 formData,
                 {
                     headers: {
@@ -106,23 +109,24 @@ class App extends React.Component {
     }
     Edit = (id) => {
         if (this.state.Editvisible === false) {
-            this.state.value_1 = this.state.getData.find(i => i.oid === id).onlineTest_title;
-            this.state.value_2 = this.state.getData.find(i => i.oid === id).onlineTest_destination;
+            this.state.value_1 = this.state.getData.find(i => i.cid === id).case_library_title;
+            this.state.value_2 = this.state.getData.find(i => i.cid === id).case_library_destination;
             this.state.value_3 = id;
-            this.state.value_4 = this.state.getData.find(i => i.oid === id).onlineTest_url;
+            this.state.value_4 = this.state.getData.find(i => i.cid === id).case_library_url;
             this.setState({
                 Editvisible: true
             })
         } else {
             let gogogo = new FormData();
-            gogogo.append('onlineTest_title', this.state.value_1)
-            gogogo.append('onlineTest_destination', this.state.value_2)
+            gogogo.append('case_library_title', this.state.value_1)
+            gogogo.append('case_library_destination', this.state.value_2)
             gogogo.append('id', this.state.value_3)
-            console.log(document.querySelector('input[type="file"]').files[0]);
-            gogogo.append('testfile',
-                document.querySelector('input[type="file"]').files[0])
-            console.log(gogogo);
-            axios.post('http://118.178.125.139:8060/admin/onlineTest/update',
+            gogogo.append('caseVideo',
+                document.querySelector('input[type="file"]#file1').files[0])
+            gogogo.append('casePPT',
+                document.querySelector('input[type="file"]#file2').files[0])
+
+            axios.post('http://118.178.125.139:8060/admin/case/update',
                 gogogo,
                 {
                     headers: {
@@ -137,7 +141,7 @@ class App extends React.Component {
         }
     }
     Del = (id) => {
-        axios.delete('http://118.178.125.139:8060/admin/onlineTest/deleteById?id=' + id,
+        axios.delete('http://118.178.125.139:8060/admin/case/deleteById?id=' + id,
             {
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded',
@@ -163,32 +167,36 @@ class App extends React.Component {
         const columns = [
             {
                 title: 'id',
-                dataIndex: 'oid',
+                dataIndex: 'cid',
                 width: 1
             },
             {
-                title: '在线测评主题',
-                dataIndex: 'onlineTest_title',
+                title: '课程主题',
+                dataIndex: 'case_library_title',
                 width: '13%'
             },
             {
-                title: '在线测评内容',
-                dataIndex: 'onlineTest_destination',
-                width: '40%'
-            },
-            {
-                title: '在线测评地址',
-                dataIndex: 'onlineTest_url',
+                title: '课程内容',
+                dataIndex: 'case_library_destination',
                 width: '20%'
             },
             {
-                title: '在线测评时间',
-                dataIndex: 'onlineTest_time',
+                title: '课程视频',
+                dataIndex: 'case_library_video',
+                width: '5%'
+            }, {
+                title: '课程教案',
+                dataIndex: 'case_library_text',
+                width: '5%'
+            },
+            {
+                title: '课程时间',
+                dataIndex: 'case_library_time',
                 width: '15%'
             }, {
                 title: '操作',
                 dataIndex: 'Actions',
-                width: 1
+                width: '1%'
             },
         ];
         return (<>
@@ -198,7 +206,7 @@ class App extends React.Component {
                 icon={<PlusOutlined />}
                 style={{ float: "right", marginBottom: '10px' }}>
                 新建
-                </Button><h2>修改在线测评信息</h2>
+                </Button><h2>修改课程信息</h2>
             <Table
                 dataSource={this.state.getData}
                 columns={columns}
@@ -206,7 +214,7 @@ class App extends React.Component {
             />
             <Modal
                 destroyOnClose
-                title="新建在线测评"
+                title="新建课程"
                 visible={this.state.Newvisible}
                 okText='确认新建'
                 cancelText='取消'
@@ -215,22 +223,27 @@ class App extends React.Component {
             >
                 <TextArea
                     onChange={({ target: { value } }) => { this.state.value_1 = value }}
-                    placeholder='在线测评主题...'
+                    placeholder='课程主题...'
                     autoSize>
                 </TextArea>
                 <TextArea
                     onChange={({ target: { value } }) => { this.state.value_2 = value }}
-                    placeholder='在线测评内容...'
+                    placeholder='课程内容...'
                     autoSize={{ minRows: 2 }}>
                 </TextArea>
                 <Input
-                    addonBefore="评测文件"
+                    id='file1'
+                    addonBefore="课程视频"
+                    type="file"></Input>
+                <Input
+                    id='file2'
+                    addonBefore="课程教案"
                     type="file"></Input>
             </Modal>
 
             <Modal
                 destroyOnClose
-                title="修改在线测评"
+                title="修改课程"
                 visible={this.state.Editvisible}
                 okText='确认修改'
                 cancelText='取消'
@@ -240,17 +253,22 @@ class App extends React.Component {
                 <TextArea
                     onChange={({ target: { value } }) => { this.state.value_1 = value }}
                     defaultValue={this.state.value_1}
-                    placeholder='在线测评主题...'
+                    placeholder='课程主题...'
                     autoSize>
                 </TextArea>
                 <TextArea
                     onChange={({ target: { value } }) => { this.state.value_2 = value }}
                     defaultValue={this.state.value_2}
-                    placeholder='在线测评内容...'
+                    placeholder='课程内容...'
                     autoSize={{ minRows: 2 }}>
                 </TextArea>
                 <Input
-                    addonBefore="评测文件"
+                    id='file1'
+                    addonBefore="课程视频"
+                    type="file"></Input>
+                <Input
+                    id='file2'
+                    addonBefore="课程教案"
                     type="file"></Input>
             </Modal>
         </>)
