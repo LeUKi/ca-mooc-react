@@ -14,11 +14,11 @@ import {
 } from '@ant-design/icons';
 
 import Home from './home'
-// import Query from './query'
-// import Zxcp from './zxcp'
+import Zxcp from './zxcp'
+import Wlk from './wlk'
 import Jz from './jz'
 // import Kc from './kc'
-// import Sjjx from './sjjx'
+import Sjjx from './sjjx'
 // import Hdjl from './hdjl'
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -85,10 +85,13 @@ class Admin extends React.Component {
                   {/* <Route path={"/admin/hdjl"} component={Hdjl}></Route> */}
                   <Route path={"/admin/home"} component={Home}></Route>
                   <Route path={"/admin/Jz"} component={Jz}></Route>
-                  {/* <Route path={"/admin/wlk"} component={Query}></Route>
+                  <Route path={"/admin/wlk"} component={Wlk}></Route>
+                  <Route path={"/admin/sjjx"} component={Sjjx}></Route>
+                  <Route path={"/admin/zxcp"} component={Zxcp}></Route>
+
+                  {/* 
           <Route path={"/admin/kc"} component={Kc}></Route>
-          <Route path={"/admin/zxcp"} component={Zxcp}></Route>
-          <Route path={"/admin/sjjx"} component={Sjjx}></Route> */}
+           */}
                   <Route path={'/admin'}>
                     <Redirect to={'/admin/home'}></Redirect>
                   </Route>

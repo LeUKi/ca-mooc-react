@@ -12,6 +12,7 @@ import {
 } from '@ant-design/icons';
 const { TextArea } = Input;
 
+
 class App extends React.Component {
     state = {
         getData: [],
@@ -20,52 +21,31 @@ class App extends React.Component {
         value_1: '',
         value_2: '',
         value_3: '',
-    }
-    getJJ = () => {
-        axios.get('http://118.178.125.139:8060/guest/introduce/find',).then(
-            res => {
-                const JJdata = res.data.extended.Introduce;
-                this.setState({
-                    JJbefore: JJdata.introduce_destination,
-                    JJafter: JJdata.introduce_destination
-                })
-            }
-        )
+        value_4: '',
+
     }
     componentWillMount() {
         this.getDt()
-        this.getJJ()
-    }
-    okJJ = () => {
-        const data = { 'introduce_destination': this.state.JJafter, 'id': 1, 'introduce_title': ' “电路分析”课程简介', }
-        axios.post('http://118.178.125.139:8060/admin/introduce/update', qs.stringify(data), {
-            headers: {
-                'content-type': 'application/x-www-form-urlencoded',
-                "token": sessionStorage.token
-            }
-        }).then(res => {
-            this.getJJ()
-            message.success('修改成功');
-        })
     }
     getDt = () => {
-        axios.get('http://118.178.125.139:8060/guest/notice/findAll?page=0&size=99',).then(
+        axios.get('http://118.178.125.139:8060/guest/onlineClass/findAll?page=0&size=99',).then(
             res => {
-                const GGbefore = res.data.extended.notices.content;
+                const GGbefore = res.data.extended.OnlineClasss.content;
                 const GGafter = []
                 GGbefore.map((GG, index) => {
                     GGafter.push({
                         key: index,
-                        nid: GG.nid,
-                        notice_title: GG.notice_title,
-                        notice_destination: GG.notice_destination,
-                        notice_time: GG.notice_time,
+                        ocid: GG.ocid,
+                        onlineClass_title: GG.onlineClass_title,
+                        onlineClass_url: GG.onlineClass_url,
+                        onlineClass_destination: GG.onlineClass_destination,
+                        onlineClass_time: GG.onlineClass_time,
                         Actions: (<div>
                             <Button
                                 type='primary'
                                 icon={<EditOutlined />}
                                 size='small'
-                                onClick={() => this.Edit(GG.nid)}>
+                                onClick={() => this.Edit(GG.ocid)}>
                                 编辑
                             </Button>
                             <br />
@@ -75,7 +55,7 @@ class App extends React.Component {
                                 cancelText='取消'
                                 okType='danger'
                                 placement='left'
-                                onConfirm={() => this.Del(GG.nid)}
+                                onConfirm={() => this.Del(GG.ocid)}
                                 arrowPointAtCenter
                                 icon={<QuestionCircleOutlined
                                     style={{ color: 'red' }} />}>
@@ -95,17 +75,17 @@ class App extends React.Component {
             }
         )
     }
-
     New = () => {
         if (this.state.Newvisible === false) {
             this.setState({
                 Newvisible: true
             })
         } else {
-            axios.post('http://118.178.125.139:8060/admin/notice/add',
+            axios.post('http://118.178.125.139:8060/admin/onlineClass/add',
                 qs.stringify({
-                    'notice_title': this.state.value_1,
-                    'notice_destination': this.state.value_2
+                    'onlineClass_title': this.state.value_1,
+                    'onlineClass_destination': this.state.value_2,
+                    'onlineClass_url': this.state.value_4,
                 }),
                 {
                     headers: {
@@ -121,23 +101,20 @@ class App extends React.Component {
     }
     Edit = (id) => {
         if (this.state.Editvisible === false) {
+            this.state.value_1 = this.state.getData.find(i => i.ocid === id).onlineClass_title;
+            this.state.value_2 = this.state.getData.find(i => i.ocid === id).onlineClass_destination;
+            this.state.value_3 = id;
+            this.state.value_4 = this.state.getData.find(i => i.ocid === id).onlineClass_url;
             this.setState({
-                value_1: this.state.getData.find(i => i.nid === id).notice_title,
-                value_2: this.state.getData.find(i => i.nid === id).notice_destination,
-                value_3: id
-            }, () => {
-                this.setState({
-                    Editvisible: true
-                })
+                Editvisible: true
             })
-
-            console.log(this.state.getData.find(i => i.nid === id).notice_title);
-            console.log(this.state);
         } else {
-            axios.post('http://118.178.125.139:8060/admin/notice/update',
+
+            axios.post('http://118.178.125.139:8060/admin/onlineClass/update',
                 qs.stringify({
-                    'notice_title': this.state.value_1,
-                    'notice_destination': this.state.value_2,
+                    'onlineClass_title': this.state.value_1,
+                    'onlineClass_destination': this.state.value_2,
+                    'onlineClass_url': this.state.value_4,
                     'id': this.state.value_3
                 }),
                 {
@@ -153,7 +130,7 @@ class App extends React.Component {
         }
     }
     Del = (id) => {
-        axios.delete('http://118.178.125.139:8060/admin/notice/deleteById?id=' + id,
+        axios.delete('http://118.178.125.139:8060/admin/onlineClass/deleteById?id=' + id,
             {
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded',
@@ -172,30 +149,35 @@ class App extends React.Component {
             value_1: '',
             value_2: '',
             value_3: '',
+            value_4: '',
         })
     }
-
     render() {
         const columns = [
             {
                 title: 'id',
-                dataIndex: 'nid',
+                dataIndex: 'ocid',
                 width: 1
             },
             {
-                title: '公告标题',
-                dataIndex: 'notice_title',
-                width: '30%'
+                title: '网络课主题',
+                dataIndex: 'onlineClass_title',
+                width: '13%'
             },
             {
-                title: '公告内容',
-                dataIndex: 'notice_destination',
+                title: '网络课内容',
+                dataIndex: 'onlineClass_destination',
                 width: '40%'
             },
             {
-                title: '公告时间',
-                dataIndex: 'notice_time',
+                title: '网络课地址',
+                dataIndex: 'onlineClass_url',
                 width: '20%'
+            },
+            {
+                title: '网络课时间',
+                dataIndex: 'onlineClass_time',
+                width: '15%'
             }, {
                 title: '操作',
                 dataIndex: 'Actions',
@@ -203,34 +185,20 @@ class App extends React.Component {
             },
         ];
         return (<>
-            <h2>修改简介信息</h2>
-            <TextArea
-                defaultValue={this.state.JJbefore}
-                placeholder={this.state.JJbefore}
-                onChange={({ target: { value } }) => {
-                    this.state.JJafter = value
-                }}
-                autoSize={{ minRows: 6 }} ></TextArea>
-            <Button
-                type="primary"
-                style={{ float: "right", marginTop: '10px' }}
-                onClick={this.okJJ}
-            >修改</Button>
-            <hr style={{ marginTop: 60, marginBottom: 20 }} />
             <Button
                 onClick={this.New}
                 type="primary"
                 icon={<PlusOutlined />}
                 style={{ float: "right", marginBottom: '10px' }}>
                 新建
-                </Button><h2>修改公告信息</h2>
+                </Button><h2>修改网络课信息</h2>
             <Table
                 dataSource={this.state.getData}
                 columns={columns}
                 bordered={true}
             />
             <Modal
-                title="新建公告"
+                title="新建网络课"
                 visible={this.state.Newvisible}
                 okText='确认新建'
                 cancelText='取消'
@@ -239,19 +207,24 @@ class App extends React.Component {
             >
                 <TextArea
                     onChange={({ target: { value } }) => { this.state.value_1 = value }}
-                    placeholder='公告标题...'
+                    placeholder='网络课主题...'
                     autoSize>
                 </TextArea>
                 <TextArea
                     onChange={({ target: { value } }) => { this.state.value_2 = value }}
-                    placeholder='公告内容...'
+                    placeholder='网络课内容...'
                     autoSize={{ minRows: 2 }}>
+                </TextArea>
+                <TextArea
+                    onChange={({ target: { value } }) => { this.state.value_4 = value }}
+                    placeholder='网络课地址...'
+                    autoSize>
                 </TextArea>
             </Modal>
 
             <Modal
                 destroyOnClose
-                title="修改公告"
+                title="修改网络课"
                 visible={this.state.Editvisible}
                 okText='确认修改'
                 cancelText='取消'
@@ -261,14 +234,20 @@ class App extends React.Component {
                 <TextArea
                     onChange={({ target: { value } }) => { this.state.value_1 = value }}
                     defaultValue={this.state.value_1}
-                    placeholder='公告标题...'
+                    placeholder='网络课主题...'
                     autoSize>
                 </TextArea>
                 <TextArea
                     onChange={({ target: { value } }) => { this.state.value_2 = value }}
                     defaultValue={this.state.value_2}
-                    placeholder='公告内容...'
+                    placeholder='网络课内容...'
                     autoSize={{ minRows: 2 }}>
+                </TextArea>
+                <TextArea
+                    onChange={({ target: { value } }) => { this.state.value_4 = value }}
+                    defaultValue={this.state.value_4}
+                    placeholder='网络课地址...'
+                    autoSize>
                 </TextArea>
             </Modal>
         </>)
