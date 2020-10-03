@@ -1,15 +1,13 @@
 /* eslint-disable react/no-direct-mutation-state */
 /* eslint-disable array-callback-return */
 import React from 'react';
-import { Table, Button, Modal, Input, message, Popconfirm, Upload } from 'antd';
+import { Table, Button, Modal, Input, message, Popconfirm } from 'antd';
 import axios from 'axios'
-import qs from 'qs'
 import {
     EditOutlined,
     DeleteOutlined,
     PlusOutlined,
     QuestionCircleOutlined,
-    UploadOutlined
 } from '@ant-design/icons';
 const { TextArea } = Input;
 
@@ -104,7 +102,11 @@ class App extends React.Component {
                     this.handleCancel()
                     message.success('成功添加')
                     this.getDt()
-                })
+                }).catch(
+                    (res)=>{
+                        console.log(res);
+                    }
+                )
         }
     }
     Edit = (id) => {

@@ -3,14 +3,14 @@
 import React from 'react';
 import { Table, Button, Modal, Input, message, Popconfirm } from 'antd';
 import axios from 'axios'
+import qs from 'qs'
 import {
     EditOutlined,
     DeleteOutlined,
     PlusOutlined,
-    QuestionCircleOutlined,
+    QuestionCircleOutlined
 } from '@ant-design/icons';
 const { TextArea } = Input;
-
 
 class App extends React.Component {
     state = {
@@ -20,33 +20,33 @@ class App extends React.Component {
         value_1: '',
         value_2: '',
         value_3: '',
-        value_4: '',
-        uploading: false,
 
     }
-    file1 = React.createRef()
     componentWillMount() {
         this.getDt()
     }
     getDt = () => {
-        axios.get('http://118.178.125.139:8060/guest/onlineTest/findAll?page=0&size=99',).then(
+        axios.get('http://118.178.125.139:8060/guest/interactionQuestion/findAll?page=0&size=99',).then(
             res => {
-                const GGbefore = res.data.extended.OnlineTests.content;
+                const GGbefore = res.data.extended.InteractionQuestions.content;
                 const GGafter = []
                 GGbefore.map((GG, index) => {
+                    const Aall = [];
+                    GG.interactionAnswers.map((A, i) => {
+                        Aall.push(A.answer)
+                    })
                     GGafter.push({
                         key: index,
-                        oid: GG.oid,
-                        onlineTest_title: GG.onlineTest_title,
-                        onlineTest_url: GG.onlineTest_url,
-                        onlineTest_destination: GG.onlineTest_destination,
-                        onlineTest_time: GG.onlineTest_time,
+                        qid: GG.qid,
+                        interactionQuestion_title: GG.interactionQuestion_title,
+                        interactionAnswers: Aall,
+                        interactionQuestion_time: GG.interactionQuestion_time,
                         Actions: (<div>
                             <Button
                                 type='primary'
                                 icon={<EditOutlined />}
                                 size='small'
-                                onClick={() => this.Edit(GG.oid)}>
+                                onClick={() => this.Edit(GG.qid)}>
                                 编辑
                             </Button>
                             <br />
@@ -56,7 +56,7 @@ class App extends React.Component {
                                 cancelText='取消'
                                 okType='danger'
                                 placement='left'
-                                onConfirm={() => this.Del(GG.oid)}
+                                onConfirm={() => this.Del(GG.qid)}
                                 arrowPointAtCenter
                                 icon={<QuestionCircleOutlined
                                     style={{ color: 'red' }} />}>
@@ -82,17 +82,14 @@ class App extends React.Component {
                 Newvisible: true
             })
         } else {
-            let formData = new FormData();
-            formData.append('onlineTest_title', this.state.value_1)
-            formData.append('onlineTest_destination', this.state.value_2)
-            formData.append('testfile',
-                document.querySelector('input[type="file"]').files[0])
-
-            axios.post('http://118.178.125.139:8060/admin/onlineTest/add',
-                formData,
+            axios.post('http://118.178.125.139:8060/admin/lecture/add',
+                qs.stringify({
+                    'interactionQuestion_title': this.state.value_1,
+                    'lecture_destination': this.state.value_2
+                }),
                 {
                     headers: {
-                        'content-type': 'multipart/form-data',
+                        'content-type': 'application/x-www-form-urlencoded',
                         "token": sessionStorage.token
                     }
                 }).then(res => {
@@ -104,27 +101,23 @@ class App extends React.Component {
     }
     Edit = (id) => {
         if (this.state.Editvisible === false) {
-            this.state.value_1 = this.state.getData.find(i => i.oid === id).onlineTest_title;
-            this.state.value_2 = this.state.getData.find(i => i.oid === id).onlineTest_destination;
-            this.state.value_3 = id;
-            this.state.value_4 = this.state.getData.find(i => i.oid === id).onlineTest_url;
+            this.state.value_1 = this.state.getData.find(i => i.qid === id).interactionQuestion_title
+            this.state.value_2 = this.state.getData.find(i => i.qid === id).lecture_destination
+            this.state.value_3 = id
             this.setState({
                 Editvisible: true
             })
         } else {
-            let gogogo = new FormData();
-            gogogo.append('onlineTest_title', this.state.value_1)
-            gogogo.append('onlineTest_destination', this.state.value_2)
-            gogogo.append('id', this.state.value_3)
-            console.log(document.querySelector('input[type="file"]').files[0]);
-            gogogo.append('testfile',
-                document.querySelector('input[type="file"]').files[0])
-            console.log(gogogo);
-            axios.post('http://118.178.125.139:8060/admin/onlineTest/update',
-                gogogo,
+
+            axios.post('http://118.178.125.139:8060/admin/lecture/update',
+                qs.stringify({
+                    'lecture_destination': this.state.value_2,
+                    'interactionQuestion_title': this.state.value_1,
+                    'id': this.state.value_3
+                }),
                 {
                     headers: {
-                        'Content-Type': 'multipart/form-data',
+                        'Content-Type': 'application/x-www-form-urlencoded',
                         'token': sessionStorage.token
                     }
                 }).then(res => {
@@ -135,7 +128,7 @@ class App extends React.Component {
         }
     }
     Del = (id) => {
-        axios.delete('http://118.178.125.139:8060/admin/onlineTest/deleteById?id=' + id,
+        axios.delete('http://118.178.125.139:8060/admin/lecture/deleteById?id=' + id,
             {
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded',
@@ -154,35 +147,29 @@ class App extends React.Component {
             value_1: '',
             value_2: '',
             value_3: '',
-            value_4: '',
         })
     }
     render() {
         const columns = [
             {
                 title: 'id',
-                dataIndex: 'oid',
+                dataIndex: 'qid',
                 width: 1
             },
             {
-                title: '在线测评主题',
-                dataIndex: 'onlineTest_title',
-                width: '13%'
+                title: '提问内容',
+                dataIndex: 'interactionQuestion_title',
+                width: '30%'
             },
             {
-                title: '在线测评内容',
-                dataIndex: 'onlineTest_destination',
+                title: '提问时间',
+                dataIndex: 'interactionQuestion_time',
                 width: '40%'
             },
             {
-                title: '在线测评地址',
-                dataIndex: 'onlineTest_url',
+                title: '回复管理',
+                dataIndex: 'interactionAnswers',
                 width: '20%'
-            },
-            {
-                title: '在线测评时间',
-                dataIndex: 'onlineTest_time',
-                width: '15%'
             }, {
                 title: '操作',
                 dataIndex: 'Actions',
@@ -196,15 +183,14 @@ class App extends React.Component {
                 icon={<PlusOutlined />}
                 style={{ float: "right", marginBottom: '10px' }}>
                 新建
-                </Button><h2>修改在线测评信息</h2>
+                </Button><h2>修改讲座信息</h2>
             <Table
                 dataSource={this.state.getData}
                 columns={columns}
                 bordered={true}
             />
             <Modal
-                destroyOnClose
-                title="新建在线测评"
+                title="新建讲座"
                 visible={this.state.Newvisible}
                 okText='确认新建'
                 cancelText='取消'
@@ -213,22 +199,19 @@ class App extends React.Component {
             >
                 <TextArea
                     onChange={({ target: { value } }) => { this.state.value_1 = value }}
-                    placeholder='在线测评主题...'
+                    placeholder='讲座主题...'
                     autoSize>
                 </TextArea>
                 <TextArea
                     onChange={({ target: { value } }) => { this.state.value_2 = value }}
-                    placeholder='在线测评内容...'
+                    placeholder='讲座内容...'
                     autoSize={{ minRows: 2 }}>
                 </TextArea>
-                <Input
-                    addonBefore="评测文件"
-                    type="file"></Input>
             </Modal>
 
             <Modal
                 destroyOnClose
-                title="修改在线测评"
+                title="修改讲座"
                 visible={this.state.Editvisible}
                 okText='确认修改'
                 cancelText='取消'
@@ -238,18 +221,15 @@ class App extends React.Component {
                 <TextArea
                     onChange={({ target: { value } }) => { this.state.value_1 = value }}
                     defaultValue={this.state.value_1}
-                    placeholder='在线测评主题...'
+                    placeholder='讲座主题...'
                     autoSize>
                 </TextArea>
                 <TextArea
                     onChange={({ target: { value } }) => { this.state.value_2 = value }}
                     defaultValue={this.state.value_2}
-                    placeholder='在线测评内容...'
+                    placeholder='讲座内容...'
                     autoSize={{ minRows: 2 }}>
                 </TextArea>
-                <Input
-                    addonBefore="评测文件"
-                    type="file"></Input>
             </Modal>
         </>)
     }

@@ -19,7 +19,7 @@ import Wlk from './wlk'
 import Jz from './jz'
 import Kc from './kc'
 import Sjjx from './sjjx'
-// import Hdjl from './hdjl'
+import Hdjl from './temp'
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -82,7 +82,7 @@ class Admin extends React.Component {
             <div className="site-layout-background" style={{ padding: 24, minHeight: '100%' }}>
               <Router>
                 <Switch>
-                  {/* <Route path={"/admin/hdjl"} component={Hdjl}></Route> */}
+                  <Route path={"/admin/hdjl"} component={Hdjl}></Route>
                   <Route path={"/admin/home"} component={Home}></Route>
                   <Route path={"/admin/Jz"} component={Jz}></Route>
                   <Route path={"/admin/wlk"} component={Wlk}></Route>
