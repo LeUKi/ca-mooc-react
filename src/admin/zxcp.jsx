@@ -26,6 +26,7 @@ class App extends React.Component {
         uploading: false,
 
     }
+    file1 = React.createRef()
     componentWillMount() {
         this.getDt()
     }
@@ -83,15 +84,17 @@ class App extends React.Component {
                 Newvisible: true
             })
         } else {
+            let formData = new FormData();
+            formData.append('onlineTest_title', this.state.value_1)
+            formData.append('onlineTest_destination', this.state.value_2)
+            formData.append('testfile',
+                document.querySelector('input[type="file"]').files[0])
+
             axios.post('http://118.178.125.139:8060/admin/onlineTest/add',
-                qs.stringify({
-                    'onlineTest_title': this.state.value_1,
-                    'onlineTest_destination': this.state.value_2,
-                    'onlineTest_url': this.state.value_4,
-                }),
+                formData,
                 {
                     headers: {
-                        'content-type': 'application/x-www-form-urlencoded',
+                        'content-type': 'multipart/form-data',
                         "token": sessionStorage.token
                     }
                 }).then(res => {
@@ -111,17 +114,19 @@ class App extends React.Component {
                 Editvisible: true
             })
         } else {
+            let formData = new FormData();
+            formData.append('onlineTest_title', this.state.value_1)
+            formData.append('onlineTest_destination', this.state.value_2)
+            formData.append('oid', this.state.value_3)
+            console.log(document.querySelector('input[type="file"]').files[0]);
+            formData.append('testfile',
+                document.querySelector('input[type="file"]').files[0])
 
             axios.post('http://118.178.125.139:8060/admin/onlineTest/update',
-                qs.stringify({
-                    'onlineTest_title': this.state.value_1,
-                    'onlineTest_destination': this.state.value_2,
-                    // 'onlineTest_url': this.state.value_4,
-                    'id': this.state.value_3
-                }),
+                formData,
                 {
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Content-Type': 'multipart/form-data',
                         'token': sessionStorage.token
                     }
                 }).then(res => {
@@ -202,7 +207,7 @@ class App extends React.Component {
             <Modal
                 title="新建在线测评"
                 visible={this.state.Newvisible}
-                okText='选择文件并新建'
+                okText='确认新建'
                 cancelText='取消'
                 onOk={this.New}
                 onCancel={this.handleCancel}
@@ -217,9 +222,9 @@ class App extends React.Component {
                     placeholder='在线测评内容...'
                     autoSize={{ minRows: 2 }}>
                 </TextArea>
-                <Upload >
-                    <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                </Upload>
+                <Input
+                    addonBefore="评测文件"
+                    type="file"></Input>
             </Modal>
 
             <Modal
@@ -243,12 +248,9 @@ class App extends React.Component {
                     placeholder='在线测评内容...'
                     autoSize={{ minRows: 2 }}>
                 </TextArea>
-                <TextArea
-                    onChange={({ target: { value } }) => { this.state.value_4 = value }}
-                    defaultValue={this.state.value_4}
-                    placeholder='在线测评地址...'
-                    autoSize>
-                </TextArea>
+                <Input
+                    addonBefore="评测文件"
+                    type="file"></Input>
             </Modal>
         </>)
     }
