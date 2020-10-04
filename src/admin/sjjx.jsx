@@ -12,7 +12,7 @@ import {
     QuestionCircleOutlined
 } from '@ant-design/icons';
 const { TextArea } = Input;
-
+const url = 'http://118.178.125.139:8060';
 
 class App extends React.Component {
     state = {
@@ -29,7 +29,7 @@ class App extends React.Component {
         this.getDt()
     }
     getDt = () => {
-        axios.get('http://118.178.125.139:8060/guest/practicalTeach/findAll?page=0&size=99',).then(
+        axios.get(url+'/guest/practicalTeach/findAll?page=0&size=99',).then(
             res => {
                 const GGbefore = res.data.extended.PracticalTeachs.content;
                 const GGafter = []
@@ -87,7 +87,7 @@ class App extends React.Component {
                 Newvisible: true
             })
         } else {
-            axios.post('http://118.178.125.139:8060/admin/practicalTeach/add',
+            axios.post(url+'/admin/practicalTeach/add',
                 qs.stringify({
                     'practicalTeach_title': this.state.value_1,
                     'practicalTeach_destination': this.state.value_2,
@@ -116,7 +116,7 @@ class App extends React.Component {
             })
         } else {
 
-            axios.post('http://118.178.125.139:8060/admin/practicalTeach/update',
+            axios.post(url+'/admin/practicalTeach/update',
                 qs.stringify({
                     'practicalTeach_title': this.state.value_1,
                     'practicalTeach_destination': this.state.value_2,
@@ -136,7 +136,7 @@ class App extends React.Component {
         }
     }
     Del = (id) => {
-        axios.delete('http://118.178.125.139:8060/admin/practicalTeach/deleteById?id=' + id,
+        axios.delete(url+'/admin/practicalTeach/deleteById?id=' + id,
             {
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded',

@@ -11,7 +11,7 @@ import {
     QuestionCircleOutlined
 } from '@ant-design/icons';
 const { TextArea } = Input;
-
+const url = 'http://118.178.125.139:8060';
 
 class App extends React.Component {
     state = {
@@ -27,7 +27,7 @@ class App extends React.Component {
         this.getDt()
     }
     getDt = () => {
-        axios.get('http://118.178.125.139:8060/guest/lecture/findAll?page=0&size=99',).then(
+        axios.get(url+'/guest/lecture/findAll?page=0&size=99',).then(
             res => {
                 const GGbefore = res.data.extended.Lectures.content;
                 const GGafter = []
@@ -79,7 +79,7 @@ class App extends React.Component {
                 Newvisible: true
             })
         } else {
-            axios.post('http://118.178.125.139:8060/admin/lecture/add',
+            axios.post(url+'/admin/lecture/add',
                 qs.stringify({
                     'lecture_title': this.state.value_1,
                     'lecture_destination': this.state.value_2
@@ -106,7 +106,7 @@ class App extends React.Component {
             })
         } else {
 
-            axios.post('http://118.178.125.139:8060/admin/lecture/update',
+            axios.post(url+'/admin/lecture/update',
                 qs.stringify({
                     'lecture_destination': this.state.value_2,
                     'lecture_title': this.state.value_1,
@@ -125,7 +125,7 @@ class App extends React.Component {
         }
     }
     Del = (id) => {
-        axios.delete('http://118.178.125.139:8060/admin/lecture/deleteById?id=' + id,
+        axios.delete(url+'/admin/lecture/deleteById?id=' + id,
             {
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded',

@@ -11,6 +11,7 @@ import {
     QuestionCircleOutlined
 } from '@ant-design/icons';
 const { TextArea } = Input;
+const url = 'http://118.178.125.139:8060';
 
 class App extends React.Component {
     state = {
@@ -22,7 +23,7 @@ class App extends React.Component {
         value_3: '',
     }
     getJJ = () => {
-        axios.get('http://118.178.125.139:8060/guest/introduce/find',).then(
+        axios.get(url+'/guest/introduce/find',).then(
             res => {
                 const JJdata = res.data.extended.Introduce;
                 this.setState({
@@ -38,7 +39,7 @@ class App extends React.Component {
     }
     okJJ = () => {
         const data = { 'introduce_destination': this.state.JJafter, 'id': 1, 'introduce_title': ' “电路分析”课程简介', }
-        axios.post('http://118.178.125.139:8060/admin/introduce/update', qs.stringify(data), {
+        axios.post(url+'/admin/introduce/update', qs.stringify(data), {
             headers: {
                 'content-type': 'application/x-www-form-urlencoded',
                 "token": sessionStorage.token
@@ -49,7 +50,7 @@ class App extends React.Component {
         })
     }
     getDt = () => {
-        axios.get('http://118.178.125.139:8060/guest/notice/findAll?page=0&size=99',).then(
+        axios.get(url+'/guest/notice/findAll?page=0&size=99',).then(
             res => {
                 const GGbefore = res.data.extended.notices.content;
                 const GGafter = []
@@ -102,7 +103,7 @@ class App extends React.Component {
                 Newvisible: true
             })
         } else {
-            axios.post('http://118.178.125.139:8060/admin/notice/add',
+            axios.post(url+'/admin/notice/add',
                 qs.stringify({
                     'notice_title': this.state.value_1,
                     'notice_destination': this.state.value_2
@@ -134,7 +135,7 @@ class App extends React.Component {
             console.log(this.state.getData.find(i => i.nid === id).notice_title);
             console.log(this.state);
         } else {
-            axios.post('http://118.178.125.139:8060/admin/notice/update',
+            axios.post(url+'/admin/notice/update',
                 qs.stringify({
                     'notice_title': this.state.value_1,
                     'notice_destination': this.state.value_2,
@@ -153,7 +154,7 @@ class App extends React.Component {
         }
     }
     Del = (id) => {
-        axios.delete('http://118.178.125.139:8060/admin/notice/deleteById?id=' + id,
+        axios.delete(url+'/admin/notice/deleteById?id=' + id,
             {
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded',

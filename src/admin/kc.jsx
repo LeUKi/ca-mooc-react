@@ -31,7 +31,7 @@ class App extends React.Component {
         this.getDt()
     }
     getDt = () => {
-        axios.get('http://118.178.125.139:8060/guest/case/findAll?page=0&size=99',).then(
+        axios.get(url+'/guest/case/findAll?page=0&size=99',).then(
             res => {
                 const GGbefore = res.data.extended.CaseLibrarys.content;
                 const GGafter = []
@@ -44,13 +44,13 @@ class App extends React.Component {
                             <Tooltip title={GG.case_library_video}>
                                 <Button type={"link"}
                                     icon={<VideoCameraOutlined />}
-                                    href={GG.case_library_video} />
+                                    href={url+GG.case_library_video} />
                             </Tooltip>),
                         case_library_text: (
                             <Tooltip title={GG.case_library_text}>
                                 <Button type={"link"}
                                     icon={<FilePptOutlined />}
-                                    href={GG.case_library_text} />
+                                    href={url+GG.case_library_text} />
                             </Tooltip>),
                         case_library_destination: GG.case_library_destination,
                         case_library_time: GG.case_library_time,
@@ -103,7 +103,7 @@ class App extends React.Component {
             formData.append('casePPT',
                 document.querySelector('input[type="file"]#file2').files[0])
 
-            axios.post('http://118.178.125.139:8060/admin/case/add',
+            axios.post(url+'/admin/case/add',
                 formData,
                 {
                     headers: {
@@ -140,7 +140,7 @@ class App extends React.Component {
             gogogo.append('casePPT',
                 document.querySelector('input[type="file"]#file2').files[0])
 
-            axios.post('http://118.178.125.139:8060/admin/case/update',
+            axios.post(url+'/admin/case/update',
                 gogogo,
                 {
                     headers: {
@@ -155,7 +155,7 @@ class App extends React.Component {
         }
     }
     Del = (id) => {
-        axios.delete('http://118.178.125.139:8060/admin/case/deleteById?id=' + id,
+        axios.delete(url+'/admin/case/deleteById?id=' + id,
             {
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded',

@@ -12,7 +12,7 @@ import {
     QuestionCircleOutlined
 } from '@ant-design/icons';
 const { TextArea } = Input;
-
+const url = 'http://118.178.125.139:8060';
 
 class App extends React.Component {
     state = {
@@ -29,7 +29,7 @@ class App extends React.Component {
         this.getDt()
     }
     getDt = () => {
-        axios.get('http://118.178.125.139:8060/guest/onlineClass/findAll?page=0&size=99',).then(
+        axios.get(url+'/guest/onlineClass/findAll?page=0&size=99',).then(
             res => {
                 const GGbefore = res.data.extended.OnlineClasss.content;
                 const GGafter = []
@@ -87,7 +87,7 @@ class App extends React.Component {
                 Newvisible: true
             })
         } else {
-            axios.post('http://118.178.125.139:8060/admin/onlineClass/add',
+            axios.post(url+'/admin/onlineClass/add',
                 qs.stringify({
                     'onlineClass_title': this.state.value_1,
                     'onlineClass_destination': this.state.value_2,
@@ -116,7 +116,7 @@ class App extends React.Component {
             })
         } else {
 
-            axios.post('http://118.178.125.139:8060/admin/onlineClass/update',
+            axios.post(url+'/admin/onlineClass/update',
                 qs.stringify({
                     'onlineClass_title': this.state.value_1,
                     'onlineClass_destination': this.state.value_2,
@@ -136,7 +136,7 @@ class App extends React.Component {
         }
     }
     Del = (id) => {
-        axios.delete('http://118.178.125.139:8060/admin/onlineClass/deleteById?id=' + id,
+        axios.delete(url+'/admin/onlineClass/deleteById?id=' + id,
             {
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded',

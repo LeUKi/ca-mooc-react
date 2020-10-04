@@ -30,7 +30,7 @@ class App extends React.Component {
         this.getDt()
     }
     getDt = () => {
-        axios.get('http://118.178.125.139:8060/guest/onlineTest/findAll?page=0&size=99',).then(
+        axios.get(url+'/guest/onlineTest/findAll?page=0&size=99',).then(
             res => {
                 const GGbefore = res.data.extended.OnlineTests.content;
                 const GGafter = []
@@ -94,7 +94,7 @@ class App extends React.Component {
             formData.append('testfile',
                 document.querySelector('input[type="file"]').files[0])
 
-            axios.post('http://118.178.125.139:8060/admin/onlineTest/add',
+            axios.post(url+'/admin/onlineTest/add',
                 formData,
                 {
                     headers: {
@@ -126,7 +126,7 @@ class App extends React.Component {
             gogogo.append('testfile',
                 document.querySelector('input[type="file"]').files[0])
             console.log(gogogo);
-            axios.post('http://118.178.125.139:8060/admin/onlineTest/update',
+            axios.post(url+'/admin/onlineTest/update',
                 gogogo,
                 {
                     headers: {
@@ -141,7 +141,7 @@ class App extends React.Component {
         }
     }
     Del = (id) => {
-        axios.delete('http://118.178.125.139:8060/admin/onlineTest/deleteById?id=' + id,
+        axios.delete(url+'/admin/onlineTest/deleteById?id=' + id,
             {
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded',
