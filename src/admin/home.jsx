@@ -28,7 +28,6 @@ class App extends React.Component {
                 const JJdata = res.data.extended.Introduce;
                 this.setState({
                     JJbefore: JJdata.introduce_destination,
-                    JJafter: JJdata.introduce_destination
                 })
             }
         )
@@ -131,9 +130,6 @@ class App extends React.Component {
                     Editvisible: true
                 })
             })
-
-            console.log(this.state.getData.find(i => i.nid === id).notice_title);
-            console.log(this.state);
         } else {
             axios.post(url + '/admin/notice/update',
                 qs.stringify({

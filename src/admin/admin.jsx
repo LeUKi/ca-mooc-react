@@ -46,12 +46,6 @@ class Admin extends React.Component {
             breakpoint="sm"
             collapsedWidth="0"
             style={{ minHeight: '100vh' }}
-            onBreakpoint={broken => {
-              console.log(broken);
-            }}
-            onCollapse={(collapsed, type) => {
-              console.log(collapsed, type);
-            }}
           >
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
               <Menu.Item key="1" icon={<HomeOutlined />}><Link to={'/admin/home'}>简介/公告</Link></Menu.Item>
@@ -96,7 +90,7 @@ class Admin extends React.Component {
               </Router>
             </div>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>Ant Design ©2020 电路分析精品课程管理后台</Footer>
+          <Footer className='noselect' style={{ textAlign: 'center' }}>Ant Design ©2020 电路分析精品课程管理后台</Footer>
         </Layout>
       </Layout>
 

@@ -122,10 +122,8 @@ class App extends React.Component {
             gogogo.append('onlineTest_title', this.state.value_1)
             gogogo.append('onlineTest_destination', this.state.value_2)
             gogogo.append('id', this.state.value_3)
-            console.log(document.querySelector('input[type="file"]').files[0]);
             gogogo.append('testfile',
                 document.querySelector('input[type="file"]').files[0])
-            console.log(gogogo);
             axios.post(url + '/admin/onlineTest/update',
                 gogogo,
                 {

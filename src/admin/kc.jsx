@@ -114,11 +114,7 @@ class App extends React.Component {
                     this.handleCancel()
                     message.success('成功添加')
                     this.getDt()
-                }).catch(
-                    (res) => {
-                        console.log(res);
-                    }
-                )
+                })
         }
     }
     Edit = (id) => {

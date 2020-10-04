@@ -1,0 +1,84 @@
+.Guest {
+  background-color: #F0F2F5;
+  height: 100vh;
+}
+.Guest .banner {
+  width: 100%;
+  height: 210px;
+  background: transparent url("./banner.jpg") no-repeat scroll bottom center;
+  background-color: #1C4058;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.Guest .banner .div {
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+}
+@media (max-width: 800px) {
+  .Guest .banner .div {
+    align-items: center;
+  }
+}
+.Guest .banner .text {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.Guest .banner .text .text1 {
+  font-size: 600%;
+  color: #fff;
+}
+.Guest .banner .text .text2 {
+  font-size: 200%;
+  color: #fff;
+}
+.Guest .center {
+  justify-content: center;
+}
+.Guest .R {
+  background-color: #ffffff30;
+  margin: 7px;
+  padding: 7px;
+  border: rgba(255, 255, 255, 0.399);
+  border-style: solid;
+  border-radius: 10px;
+}
+
+.Home {
+  background-color: #F0F2F5;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.Home .C1 {
+  margin: 10px;
+  width: 400px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 7px;
+}
+
+.Query {
+  background-color: #F0F2F5;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.Query .C1 {
+  margin: 10px;
+  width: 800px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 7px;
+}

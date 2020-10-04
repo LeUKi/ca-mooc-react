@@ -23,19 +23,13 @@ import {
   HomeOutlined,
   BookOutlined
 } from '@ant-design/icons';
-//import locale from 'antd/lib/date-picker/locale/en_US';
 
 const history = createBrowserHistory()
-
 class Sider extends React.Component {
   state = {
     theme: 'dark',
     current: '1',
   };
-  componentDidUpdate() {
-    console.log(123);
-  }
-
   logInOut = () => {
     if (sessionStorage.token === undefined) {
       return (
@@ -56,7 +50,6 @@ class Sider extends React.Component {
   }
 
   handleClick = e => {
-    console.log('click ', e);
     this.setState({
       current: e.key,
     });
@@ -92,10 +85,11 @@ class Guest extends React.Component {
     return <div className="Guest" >
 
       <div className='banner noselect'>
-
-        <div className='text'>
-          <span className='text1'>电路分析</span>
-          <span className='text2'>精品课程</span>
+        <div className='div'>
+          <div className='text'>
+            <span className='text1'>电路分析</span>
+            <span className='text2'>精品课程</span>
+          </div>
         </div>
       </div>
 

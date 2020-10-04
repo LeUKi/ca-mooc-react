@@ -197,7 +197,7 @@ class Demo extends React.Component {
         const { ...state } = this.state;
         const columns = [
             {
-                title: 'id',
+                title: 'Qid',
                 dataIndex: 'qid',
                 width: 1
             },
@@ -218,7 +218,7 @@ class Demo extends React.Component {
                 align: 'right',
                 width: 1,
                 render: (record) => (
-                    <div>
+                    <div key={record.qid}>
                         <Tooltip title={<span style={{ color: "black" }}>添加回复</span>} placement={'left'} color={'white'}>
                             <Button
                                 icon={<PlusOutlined />}
@@ -256,13 +256,13 @@ class Demo extends React.Component {
             },
         ];
         const innercolumns = [
-            { title: 'id', dataIndex: 'aid' },
+            { title: 'Aid', dataIndex: 'aid' },
             { title: '回复', dataIndex: 'answer', align: 'center' },
-            { title: '回复时间', dataIndex: 'interactionAnswer_time', align: 'center' },
+            { title: '回复时间', dataIndex: 'interactionAnswer_time', align: 'center', width: 118 },
             {
                 title: '操作', key: 'action', align: 'right',
                 render: (record) => (
-                    <div>
+                    <div key={record.aid}>
                         <Tooltip title="编辑回复" placement={'left'} color={'blue'}>
                             <Button
                                 type='primary'
@@ -306,8 +306,9 @@ class Demo extends React.Component {
                     bordered
                     scroll={{ x: true }}
                     expandable={{
-                        expandedRowRender: (record) => {
+                        expandedRowRender: (record, index) => {
                             return <Table
+                                key={index}
                                 columns={innercolumns}
                                 dataSource={record.interactionAnswers}
                                 pagination={false}></Table>;
