@@ -50,6 +50,7 @@ class Home extends React.Component {
             })
     }
     componentWillMount() {
+        document.title = '电路分析精品课程 - 首页'
         this.getGG();
         this.getJJ()
     }

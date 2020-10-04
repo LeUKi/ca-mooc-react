@@ -49,6 +49,7 @@ class Query extends React.Component {
             })
     }
     componentWillMount() {
+        document.title = '电路分析精品课程 - 课程'
         this.getDATA()
     }
     render() {

@@ -24,7 +24,7 @@ class Query extends React.Component {
                                     <Tag style={{ float: "right" }}>id:{item.oid}</Tag>
                                     {item.onlineTest_title}</h3>
                                 <p>{item.onlineTest_destination}</p>
-                                <a target={'_blank'} rel="noopener noreferrer" href={'http://118.178.125.139:8060'+item.onlineTest_url}>
+                                <a target={'_blank'} rel="noopener noreferrer" href={'http://118.178.125.139:8060' + item.onlineTest_url}>
                                     <Button shape="round" icon={<FileOutlined />}>
                                         {item.onlineTest_url.split('test/')[1]}
                                     </Button>
@@ -41,6 +41,7 @@ class Query extends React.Component {
             })
     }
     componentWillMount() {
+        document.title = '电路分析精品课程 - 在线测评'
         this.getDATA()
     }
     render() {

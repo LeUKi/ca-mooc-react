@@ -26,6 +26,7 @@ const { Header, Content, Footer, Sider } = Layout;
 
 class Admin extends React.Component {
   componentDidMount() {
+    document.title="管理后台"
     if (sessionStorage.token === undefined) {
       this.props.history.push('/login')
     }

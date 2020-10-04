@@ -7,6 +7,7 @@ import axios from 'axios'
 
 class Login extends React.Component {
   componentDidMount() {
+    document.title="后台登入"
     if (!(sessionStorage.token === undefined)) {
       this.props.history.push('/admin')
     }

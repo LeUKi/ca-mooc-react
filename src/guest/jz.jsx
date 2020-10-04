@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Card,  Tag } from 'antd';
+import { Tabs, Card, Tag } from 'antd';
 //import { HashRouter as Link } from 'react-router-dom'
 import axios from 'axios'
 
@@ -35,6 +35,7 @@ class Query extends React.Component {
             })
     }
     componentWillMount() {
+        document.title = '电路分析精品课程 - 讲座'
         this.getDATA()
     }
     render() {
