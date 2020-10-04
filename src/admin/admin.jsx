@@ -19,7 +19,7 @@ import Wlk from './wlk'
 import Jz from './jz'
 import Kc from './kc'
 import Sjjx from './sjjx'
-import Hdjl from './temp'
+import Hdjl from './hdjl'
 
 const { Header, Content, Footer, Sider } = Layout;
 

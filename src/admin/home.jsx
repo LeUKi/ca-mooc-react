@@ -223,7 +223,7 @@ class App extends React.Component {
                 icon={<PlusOutlined />}
                 style={{ float: "right", marginBottom: '10px' }}>
                 新建
-                </Button><h2>修改公告信息</h2>
+                </Button><h2>公告信息管理</h2>
             <Table
                 dataSource={this.state.getData}
                 columns={columns}
