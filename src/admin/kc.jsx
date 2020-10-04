@@ -55,13 +55,13 @@ class App extends React.Component {
                         case_library_destination: GG.case_library_destination,
                         case_library_time: GG.case_library_time,
                         Actions: (<div>
-                            <Button
-                                type='primary'
-                                icon={<EditOutlined />}
-                                size='small'
-                                onClick={() => this.Edit(GG.cid)}>
-                                编辑
-                            </Button>
+                            <Tooltip title="编辑" placement={'left'} color={'blue'}>
+                                <Button
+                                    type='primary'
+                                    icon={<EditOutlined />}
+                                    size='small'
+                                    onClick={() => this.Edit(GG.cid)} />
+                            </Tooltip>
                             <br />
                             <Popconfirm
                                 title="你确定吗？"
@@ -73,12 +73,12 @@ class App extends React.Component {
                                 arrowPointAtCenter
                                 icon={<QuestionCircleOutlined
                                     style={{ color: 'red' }} />}>
-                                <Button
-                                    type='danger'
-                                    icon={<DeleteOutlined />}
-                                    size='small'>
-                                    删除
-                            </Button>
+                                 <Tooltip title="删除" placement={'left'} color={'red'}>
+                                    <Button
+                                        type='danger'
+                                        icon={<DeleteOutlined />}
+                                        size='small' />
+                                </Tooltip>
                             </Popconfirm>
                         </div>)
                     })
@@ -187,26 +187,29 @@ class App extends React.Component {
             {
                 title: '课程主题',
                 dataIndex: 'case_library_title',
-                width: '13%'
+                align: 'center',
+
             },
             {
                 title: '课程内容',
                 dataIndex: 'case_library_destination',
+                align: 'center',
 
             },
             {
                 title: '课程视频',
                 dataIndex: 'case_library_video',
-
+                width: 1
             }, {
                 title: '课程教案',
                 dataIndex: 'case_library_text',
-
+                width: 1
             },
             {
                 title: '课程时间',
                 dataIndex: 'case_library_time',
-
+                align: 'center',
+                width: 118
             }, {
                 title: '操作',
                 dataIndex: 'Actions',

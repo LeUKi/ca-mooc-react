@@ -1,7 +1,7 @@
 /* eslint-disable react/no-direct-mutation-state */
 /* eslint-disable array-callback-return */
 import React from 'react';
-import { Table, Button, Modal, Input, message, Popconfirm } from 'antd';
+import { Table, Button, Modal, Input, message, Popconfirm, Tooltip } from 'antd';
 import axios from 'axios'
 import qs from 'qs'
 import {
@@ -23,7 +23,7 @@ class App extends React.Component {
         value_3: '',
     }
     getJJ = () => {
-        axios.get(url+'/guest/introduce/find',).then(
+        axios.get(url + '/guest/introduce/find',).then(
             res => {
                 const JJdata = res.data.extended.Introduce;
                 this.setState({
@@ -39,7 +39,7 @@ class App extends React.Component {
     }
     okJJ = () => {
         const data = { 'introduce_destination': this.state.JJafter, 'id': 1, 'introduce_title': ' “电路分析”课程简介', }
-        axios.post(url+'/admin/introduce/update', qs.stringify(data), {
+        axios.post(url + '/admin/introduce/update', qs.stringify(data), {
             headers: {
                 'content-type': 'application/x-www-form-urlencoded',
                 "token": sessionStorage.token
@@ -50,7 +50,7 @@ class App extends React.Component {
         })
     }
     getDt = () => {
-        axios.get(url+'/guest/notice/findAll?page=0&size=99',).then(
+        axios.get(url + '/guest/notice/findAll?page=0&size=99',).then(
             res => {
                 const GGbefore = res.data.extended.notices.content;
                 const GGafter = []
@@ -62,13 +62,13 @@ class App extends React.Component {
                         notice_destination: GG.notice_destination,
                         notice_time: GG.notice_time,
                         Actions: (<div>
-                            <Button
-                                type='primary'
-                                icon={<EditOutlined />}
-                                size='small'
-                                onClick={() => this.Edit(GG.nid)}>
-                                编辑
-                            </Button>
+                            <Tooltip title="编辑" placement={'left'} color={'blue'}>
+                                <Button
+                                    type='primary'
+                                    icon={<EditOutlined />}
+                                    size='small'
+                                    onClick={() => this.Edit(GG.nid)} />
+                            </Tooltip>
                             <br />
                             <Popconfirm
                                 title="你确定吗？"
@@ -80,12 +80,12 @@ class App extends React.Component {
                                 arrowPointAtCenter
                                 icon={<QuestionCircleOutlined
                                     style={{ color: 'red' }} />}>
-                                <Button
-                                    type='danger'
-                                    icon={<DeleteOutlined />}
-                                    size='small'>
-                                    删除
-                            </Button>
+                                <Tooltip title="删除" placement={'left'} color={'red'}>
+                                    <Button
+                                        type='danger'
+                                        icon={<DeleteOutlined />}
+                                        size='small' />
+                                </Tooltip>
                             </Popconfirm>
                         </div>)
                     })
@@ -103,7 +103,7 @@ class App extends React.Component {
                 Newvisible: true
             })
         } else {
-            axios.post(url+'/admin/notice/add',
+            axios.post(url + '/admin/notice/add',
                 qs.stringify({
                     'notice_title': this.state.value_1,
                     'notice_destination': this.state.value_2
@@ -135,7 +135,7 @@ class App extends React.Component {
             console.log(this.state.getData.find(i => i.nid === id).notice_title);
             console.log(this.state);
         } else {
-            axios.post(url+'/admin/notice/update',
+            axios.post(url + '/admin/notice/update',
                 qs.stringify({
                     'notice_title': this.state.value_1,
                     'notice_destination': this.state.value_2,
@@ -154,7 +154,7 @@ class App extends React.Component {
         }
     }
     Del = (id) => {
-        axios.delete(url+'/admin/notice/deleteById?id=' + id,
+        axios.delete(url + '/admin/notice/deleteById?id=' + id,
             {
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded',
@@ -186,17 +186,20 @@ class App extends React.Component {
             {
                 title: '公告标题',
                 dataIndex: 'notice_title',
-                width: '30%'
+                align: 'center',
+
             },
             {
                 title: '公告内容',
                 dataIndex: 'notice_destination',
-                width: '40%'
+                align: 'center',
+
             },
             {
                 title: '公告时间',
                 dataIndex: 'notice_time',
-                width: '20%'
+                align: 'center',
+                width: 118
             }, {
                 title: '操作',
                 dataIndex: 'Actions',

@@ -1,7 +1,7 @@
 /* eslint-disable react/no-direct-mutation-state */
 /* eslint-disable array-callback-return */
 import React from 'react';
-import { Table, Button, Modal, Input, message, Popconfirm } from 'antd';
+import { Table, Button, Modal, Input, message, Popconfirm, Tooltip } from 'antd';
 import axios from 'axios'
 import qs from 'qs'
 import {
@@ -27,7 +27,7 @@ class App extends React.Component {
         this.getDt()
     }
     getDt = () => {
-        axios.get(url+'/guest/lecture/findAll?page=0&size=99',).then(
+        axios.get(url + '/guest/lecture/findAll?page=0&size=99',).then(
             res => {
                 const GGbefore = res.data.extended.Lectures.content;
                 const GGafter = []
@@ -39,13 +39,13 @@ class App extends React.Component {
                         lecture_destination: GG.lecture_destination,
                         lecture_time: GG.lecture_time,
                         Actions: (<div>
-                            <Button
-                                type='primary'
-                                icon={<EditOutlined />}
-                                size='small'
-                                onClick={() => this.Edit(GG.lid)}>
-                                编辑
-                            </Button>
+                            <Tooltip title="编辑" placement={'left'} color={'blue'}>
+                                <Button
+                                    type='primary'
+                                    icon={<EditOutlined />}
+                                    size='small'
+                                    onClick={() => this.Edit(GG.lid)} />
+                            </Tooltip>
                             <br />
                             <Popconfirm
                                 title="你确定吗？"
@@ -57,12 +57,12 @@ class App extends React.Component {
                                 arrowPointAtCenter
                                 icon={<QuestionCircleOutlined
                                     style={{ color: 'red' }} />}>
-                                <Button
-                                    type='danger'
-                                    icon={<DeleteOutlined />}
-                                    size='small'>
-                                    删除
-                            </Button>
+                                <Tooltip title="删除" placement={'left'} color={'red'}>
+                                    <Button
+                                        type='danger'
+                                        icon={<DeleteOutlined />}
+                                        size='small' />
+                                </Tooltip>
                             </Popconfirm>
                         </div>)
                     })
@@ -79,7 +79,7 @@ class App extends React.Component {
                 Newvisible: true
             })
         } else {
-            axios.post(url+'/admin/lecture/add',
+            axios.post(url + '/admin/lecture/add',
                 qs.stringify({
                     'lecture_title': this.state.value_1,
                     'lecture_destination': this.state.value_2
@@ -106,7 +106,7 @@ class App extends React.Component {
             })
         } else {
 
-            axios.post(url+'/admin/lecture/update',
+            axios.post(url + '/admin/lecture/update',
                 qs.stringify({
                     'lecture_destination': this.state.value_2,
                     'lecture_title': this.state.value_1,
@@ -125,7 +125,7 @@ class App extends React.Component {
         }
     }
     Del = (id) => {
-        axios.delete(url+'/admin/lecture/deleteById?id=' + id,
+        axios.delete(url + '/admin/lecture/deleteById?id=' + id,
             {
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded',
@@ -156,17 +156,20 @@ class App extends React.Component {
             {
                 title: '讲座主题',
                 dataIndex: 'lecture_title',
-                width: '30%'
+                align: 'center',
+
             },
             {
                 title: '讲座内容',
                 dataIndex: 'lecture_destination',
-                width: '40%'
+                align: 'center',
+
             },
             {
                 title: '讲座时间',
                 dataIndex: 'lecture_time',
-                width: '20%'
+                align: 'center',
+                width: 118
             }, {
                 title: '操作',
                 dataIndex: 'Actions',

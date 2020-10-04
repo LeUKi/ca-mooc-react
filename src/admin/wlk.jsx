@@ -47,13 +47,13 @@ class App extends React.Component {
                         onlineClass_destination: GG.onlineClass_destination,
                         onlineClass_time: GG.onlineClass_time,
                         Actions: (<div>
-                            <Button
-                                type='primary'
-                                icon={<EditOutlined />}
-                                size='small'
-                                onClick={() => this.Edit(GG.ocid)}>
-                                编辑
-                            </Button>
+                           <Tooltip title="编辑" placement={'left'} color={'blue'}>
+                                <Button
+                                    type='primary'
+                                    icon={<EditOutlined />}
+                                    size='small'
+                                    onClick={() => this.Edit(GG.ocid)} />
+                            </Tooltip>
                             <br />
                             <Popconfirm
                                 title="你确定吗？"
@@ -65,12 +65,12 @@ class App extends React.Component {
                                 arrowPointAtCenter
                                 icon={<QuestionCircleOutlined
                                     style={{ color: 'red' }} />}>
-                                <Button
-                                    type='danger'
-                                    icon={<DeleteOutlined />}
-                                    size='small'>
-                                    删除
-                            </Button>
+                                <Tooltip title="删除" placement={'left'} color={'red'}>
+                                    <Button
+                                        type='danger'
+                                        icon={<DeleteOutlined />}
+                                        size='small' />
+                                </Tooltip>
                             </Popconfirm>
                         </div>)
                     })
@@ -168,22 +168,26 @@ class App extends React.Component {
             {
                 title: '网络课主题',
                 dataIndex: 'onlineClass_title',
+                align: 'center',
+                width: 120
 
             },
             {
                 title: '网络课内容',
                 dataIndex: 'onlineClass_destination',
+                align: 'center',
 
             },
             {
                 title: '网络课地址',
                 dataIndex: 'onlineClass_url',
-
+                width: 1
             },
             {
                 title: '网络课时间',
                 dataIndex: 'onlineClass_time',
-
+                align: 'center',
+                width: 118
             }, {
                 title: '操作',
                 dataIndex: 'Actions',

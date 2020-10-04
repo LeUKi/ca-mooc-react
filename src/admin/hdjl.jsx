@@ -27,7 +27,7 @@ class Demo extends React.Component {
         value_3: '',
     };
     getDt = () => {
-        axios.get(url+'/guest/interactionQuestion/findAll?page=0&size=99',)
+        axios.get(url + '/guest/interactionQuestion/findAll?page=0&size=99',)
             .then(res => {
                 const GGbefore = res.data.extended.InteractionQuestions.content;
                 const GGafter = []
@@ -53,7 +53,7 @@ class Demo extends React.Component {
                 Newvisible: true
             })
         } else {
-            axios.post(url+'/admin/interactionQuestion/add',
+            axios.post(url + '/admin/interactionQuestion/add',
                 qs.stringify({
                     'interactionQuestion_title': this.state.value_1,
                 }),
@@ -78,7 +78,7 @@ class Demo extends React.Component {
             })
         } else {
 
-            axios.post(url+'/admin/interactionQuestion/update',
+            axios.post(url + '/admin/interactionQuestion/update',
                 qs.stringify({
                     'interactionQuestion_title': this.state.value_1,
                     'id': this.state.value_3
@@ -96,7 +96,7 @@ class Demo extends React.Component {
         }
     }
     Del = (id) => {
-        axios.delete(url+'/admin/interactionQuestion/deleteById?id=' + id,
+        axios.delete(url + '/admin/interactionQuestion/deleteById?id=' + id,
             {
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded',
@@ -116,7 +116,7 @@ class Demo extends React.Component {
                 iNewvisible: true
             })
         } else {
-            axios.post(url+'/admin/interactionAnswer/add',
+            axios.post(url + '/admin/interactionAnswer/add',
                 qs.stringify({
                     'answer': this.state.value_1,
                     'questionId': this.state.value_3
@@ -135,7 +135,7 @@ class Demo extends React.Component {
     }
     iEdit = (id) => {
         if (this.state.iEditvisible === false) {
-            axios.get(url+'/guest/interactionAnswer/findById?id=' + id)
+            axios.get(url + '/guest/interactionAnswer/findById?id=' + id)
                 .then((res) => {
                     this.state.value_1 = res.data.extended.InteractionAnswer.answer
                     this.state.value_2 = res.data.extended.InteractionAnswer.interactionQuestion.qid
@@ -146,7 +146,7 @@ class Demo extends React.Component {
                 })
         } else {
             const id2 = this.state.value_2
-            axios.post(url+'/admin/interactionAnswer/update',
+            axios.post(url + '/admin/interactionAnswer/update',
                 qs.stringify({
                     'answer': this.state.value_1,
                     'questionId': id2,
@@ -166,7 +166,7 @@ class Demo extends React.Component {
         }
     }
     iDel = (id) => {
-        axios.delete(url+'/admin/interactionAnswer/deleteById?id=' + id,
+        axios.delete(url + '/admin/interactionAnswer/deleteById?id=' + id,
             {
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded',
@@ -199,22 +199,24 @@ class Demo extends React.Component {
             {
                 title: 'id',
                 dataIndex: 'qid',
+                width: 1
             },
             {
                 title: '提问内容',
                 align: 'center',
-
                 dataIndex: 'interactionQuestion_title',
             },
             {
                 title: '提问时间',
-                align: 'center',
                 dataIndex: 'interactionQuestion_time',
+                align: 'center',
+                width: 118
             },
             {
                 title: '操作',
                 key: 'action',
                 align: 'right',
+                width: 1,
                 render: (record) => (
                     <div>
                         <Tooltip title={<span style={{ color: "black" }}>添加回复</span>} placement={'left'} color={'white'}>

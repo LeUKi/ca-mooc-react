@@ -29,7 +29,7 @@ class App extends React.Component {
         this.getDt()
     }
     getDt = () => {
-        axios.get(url+'/guest/practicalTeach/findAll?page=0&size=99',).then(
+        axios.get(url + '/guest/practicalTeach/findAll?page=0&size=99',).then(
             res => {
                 const GGbefore = res.data.extended.PracticalTeachs.content;
                 const GGafter = []
@@ -47,13 +47,13 @@ class App extends React.Component {
                         practicalTeach_destination: GG.practicalTeach_destination,
                         practicalTeach_time: GG.practicalTeach_time,
                         Actions: (<div>
-                            <Button
-                                type='primary'
-                                icon={<EditOutlined />}
-                                size='small'
-                                onClick={() => this.Edit(GG.pid)}>
-                                编辑
-                            </Button>
+                            <Tooltip title="编辑" placement={'left'} color={'blue'}>
+                                <Button
+                                    type='primary'
+                                    icon={<EditOutlined />}
+                                    size='small'
+                                    onClick={() => this.Edit(GG.pid)} />
+                            </Tooltip>
                             <br />
                             <Popconfirm
                                 title="你确定吗？"
@@ -65,12 +65,12 @@ class App extends React.Component {
                                 arrowPointAtCenter
                                 icon={<QuestionCircleOutlined
                                     style={{ color: 'red' }} />}>
-                                <Button
-                                    type='danger'
-                                    icon={<DeleteOutlined />}
-                                    size='small'>
-                                    删除
-                            </Button>
+                                <Tooltip title="删除" placement={'left'} color={'red'}>
+                                    <Button
+                                        type='danger'
+                                        icon={<DeleteOutlined />}
+                                        size='small' />
+                                </Tooltip>
                             </Popconfirm>
                         </div>)
                     })
@@ -87,7 +87,7 @@ class App extends React.Component {
                 Newvisible: true
             })
         } else {
-            axios.post(url+'/admin/practicalTeach/add',
+            axios.post(url + '/admin/practicalTeach/add',
                 qs.stringify({
                     'practicalTeach_title': this.state.value_1,
                     'practicalTeach_destination': this.state.value_2,
@@ -116,7 +116,7 @@ class App extends React.Component {
             })
         } else {
 
-            axios.post(url+'/admin/practicalTeach/update',
+            axios.post(url + '/admin/practicalTeach/update',
                 qs.stringify({
                     'practicalTeach_title': this.state.value_1,
                     'practicalTeach_destination': this.state.value_2,
@@ -136,7 +136,7 @@ class App extends React.Component {
         }
     }
     Del = (id) => {
-        axios.delete(url+'/admin/practicalTeach/deleteById?id=' + id,
+        axios.delete(url + '/admin/practicalTeach/deleteById?id=' + id,
             {
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded',
@@ -163,30 +163,34 @@ class App extends React.Component {
             {
                 title: 'id',
                 dataIndex: 'pid',
-
+                width: 1
             },
             {
                 title: '实践教学主题',
                 dataIndex: 'practicalTeach_title',
+                align: 'center',
 
             },
             {
                 title: '实践教学内容',
                 dataIndex: 'practicalTeach_destination',
+                align: 'center',
 
             },
             {
                 title: '实践教学地址',
                 dataIndex: 'practicalTeach_url',
+                width: 1
             },
             {
                 title: '实践教学时间',
                 dataIndex: 'practicalTeach_time',
-
+                align: 'center',
+                width: 118
             }, {
                 title: '操作',
                 dataIndex: 'Actions',
-
+                width: 1
             },
         ];
         return (<>

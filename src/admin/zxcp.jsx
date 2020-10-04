@@ -30,7 +30,7 @@ class App extends React.Component {
         this.getDt()
     }
     getDt = () => {
-        axios.get(url+'/guest/onlineTest/findAll?page=0&size=99',).then(
+        axios.get(url + '/guest/onlineTest/findAll?page=0&size=99',).then(
             res => {
                 const GGbefore = res.data.extended.OnlineTests.content;
                 const GGafter = []
@@ -48,13 +48,13 @@ class App extends React.Component {
                         onlineTest_destination: GG.onlineTest_destination,
                         onlineTest_time: GG.onlineTest_time,
                         Actions: (<div>
-                            <Button
-                                type='primary'
-                                icon={<EditOutlined />}
-                                size='small'
-                                onClick={() => this.Edit(GG.oid)}>
-                                编辑
-                            </Button>
+                            <Tooltip title="编辑" placement={'left'} color={'blue'}>
+                                <Button
+                                    type='primary'
+                                    icon={<EditOutlined />}
+                                    size='small'
+                                    onClick={() => this.Edit(GG.oid)} />
+                            </Tooltip>
                             <br />
                             <Popconfirm
                                 title="你确定吗？"
@@ -66,12 +66,12 @@ class App extends React.Component {
                                 arrowPointAtCenter
                                 icon={<QuestionCircleOutlined
                                     style={{ color: 'red' }} />}>
-                                <Button
-                                    type='danger'
-                                    icon={<DeleteOutlined />}
-                                    size='small'>
-                                    删除
-                            </Button>
+                                <Tooltip title="删除" placement={'left'} color={'red'}>
+                                    <Button
+                                        type='danger'
+                                        icon={<DeleteOutlined />}
+                                        size='small' />
+                                </Tooltip>
                             </Popconfirm>
                         </div>)
                     })
@@ -94,7 +94,7 @@ class App extends React.Component {
             formData.append('testfile',
                 document.querySelector('input[type="file"]').files[0])
 
-            axios.post(url+'/admin/onlineTest/add',
+            axios.post(url + '/admin/onlineTest/add',
                 formData,
                 {
                     headers: {
@@ -126,7 +126,7 @@ class App extends React.Component {
             gogogo.append('testfile',
                 document.querySelector('input[type="file"]').files[0])
             console.log(gogogo);
-            axios.post(url+'/admin/onlineTest/update',
+            axios.post(url + '/admin/onlineTest/update',
                 gogogo,
                 {
                     headers: {
@@ -141,7 +141,7 @@ class App extends React.Component {
         }
     }
     Del = (id) => {
-        axios.delete(url+'/admin/onlineTest/deleteById?id=' + id,
+        axios.delete(url + '/admin/onlineTest/deleteById?id=' + id,
             {
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded',
@@ -173,22 +173,25 @@ class App extends React.Component {
             {
                 title: '在线测评主题',
                 dataIndex: 'onlineTest_title',
+                align: 'center',
 
             },
             {
                 title: '在线测评内容',
                 dataIndex: 'onlineTest_destination',
+                align: 'center',
 
             },
             {
                 title: '在线测评地址',
                 dataIndex: 'onlineTest_url',
-
+                width: 1
             },
             {
                 title: '在线测评时间',
                 dataIndex: 'onlineTest_time',
-
+                align: 'center',
+                width: 118
             }, {
                 title: '操作',
                 dataIndex: 'Actions',
