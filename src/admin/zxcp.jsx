@@ -43,7 +43,7 @@ class App extends React.Component {
                             <Tooltip title={GG.onlineTest_url}>
                                 <Button type={"link"}
                                     icon={<FileOutlined />}
-                                    href={url+GG.onlineTest_url} />
+                                    href={url + GG.onlineTest_url} />
                             </Tooltip>),
                         onlineTest_destination: GG.onlineTest_destination,
                         onlineTest_time: GG.onlineTest_time,
@@ -204,6 +204,7 @@ class App extends React.Component {
                 新建
                 </Button><h2>在线测评信息管理</h2>
             <Table
+                scroll={{ x: true }}
                 dataSource={this.state.getData}
                 columns={columns}
                 bordered={true}

@@ -302,6 +302,7 @@ class Demo extends React.Component {
                 <Table
                     {...state}
                     bordered
+                    scroll={{ x: true }}
                     expandable={{
                         expandedRowRender: (record) => {
                             return <Table

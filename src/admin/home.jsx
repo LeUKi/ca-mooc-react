@@ -225,6 +225,7 @@ class App extends React.Component {
                 新建
                 </Button><h2>公告信息管理</h2>
             <Table
+                scroll={{ x: true }}
                 dataSource={this.state.getData}
                 columns={columns}
                 bordered={true}
