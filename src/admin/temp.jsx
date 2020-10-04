@@ -15,7 +15,7 @@ const { TextArea } = Input;
 class Demo extends React.Component {
     state = {
         size: 'default',
-        expandable:true,
+        expandable: true,
         hasData: true,
         Newvisible: false,
         Editvisible: false,
@@ -136,29 +136,35 @@ class Demo extends React.Component {
     }
     iEdit = (id) => {
         if (this.state.Editvisible === false) {
-            this.state.value_1 = this.state.getData.find(i => i.aid === id).interactionQuestion_title
-            this.state.value_2 = this.state.getData.find(i => i.aid === id).lecture_destination
-            this.state.value_3 = id
-            this.setState({
-                Editvisible: true
-            })
+            axios.get('http://118.178.125.139:8060/guest/interactionAnswer/findById?id=' + id)
+                .then((res) => {
+                    this.state.value_1 = res.data.extended.InteractionAnswer.answer
+                    this.state.value_3 = id
+                    this.setState({
+                        Editvisible: true
+                    })
+                })
         } else {
-
-            axios.post('http://118.178.125.139:8060/admin/lecture/update',
-                qs.stringify({
-                    'lecture_destination': this.state.value_2,
-                    'interactionQuestion_title': this.state.value_1,
-                    'id': this.state.value_3
-                }),
-                {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'token': sessionStorage.token
-                    }
-                }).then(res => {
-                    this.handleCancel()
-                    message.success('修改成功')
-                    this.getDt()
+            axios.get('http://118.178.125.139:8060/guest/interactionAnswer/findById?id=' + id)
+                .then((res) => {
+                    const Qid = res.data.extended.InteractionAnswer.interactionQuestion.qid
+                    console.log(Qid, this.state.value_3, this.state.value_1);
+                    axios.post('http://118.178.125.139:8060/admin/interactionAnswer/update',
+                        qs.stringify({
+                            'answer': this.state.value_1,
+                            'questionId': Qid,
+                            'id': this.state.value_3
+                        }),
+                        {
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'token': sessionStorage.token
+                            }
+                        }).then(res => {
+                            this.handleCancel()
+                            message.success('修改成功')
+                            this.getDt()
+                        })
                 })
         }
     }
@@ -175,7 +181,7 @@ class Demo extends React.Component {
             })
     }
 
-    handleCancel=()=>{
+    handleCancel = () => {
         this.setState({
             Newvisible: false,
             Editvisible: false,
@@ -200,7 +206,7 @@ class Demo extends React.Component {
             {
                 title: '提问内容',
                 align: 'center',
-        
+
                 dataIndex: 'interactionQuestion_title',
             },
             {
@@ -298,12 +304,14 @@ class Demo extends React.Component {
                 </Button><h2>互动交流管理</h2>
                 <Table
                     {...state}
-                    expandable={{expandedRowRender: (record) => {
-                        return <Table
-                            columns={innercolumns}
-                            dataSource={record.interactionAnswers}
-                            pagination={false}></Table>;
-                    }}}
+                    expandable={{
+                        expandedRowRender: (record) => {
+                            return <Table
+                                columns={innercolumns}
+                                dataSource={record.interactionAnswers}
+                                pagination={false}></Table>;
+                        }
+                    }}
                     expandRowByClick={true}
                     columns={columns}
                     dataSource={this.state.getData}
