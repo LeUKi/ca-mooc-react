@@ -189,6 +189,7 @@ class App extends React.Component {
                 title: '公告内容',
                 dataIndex: 'notice_destination',
                 align: 'center',
+                width: 700
 
             },
             {

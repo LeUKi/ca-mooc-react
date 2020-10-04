@@ -184,12 +184,14 @@ class App extends React.Component {
                 title: '课程主题',
                 dataIndex: 'case_library_title',
                 align: 'center',
+                width: 300
 
             },
             {
                 title: '课程内容',
                 dataIndex: 'case_library_destination',
                 align: 'center',
+                width: 700
 
             },
             {

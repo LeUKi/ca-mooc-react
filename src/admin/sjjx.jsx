@@ -169,13 +169,14 @@ class App extends React.Component {
                 title: '实践教学主题',
                 dataIndex: 'practicalTeach_title',
                 align: 'center',
+                width: 300
 
             },
             {
                 title: '实践教学内容',
                 dataIndex: 'practicalTeach_destination',
                 align: 'center',
-
+                width: 700
             },
             {
                 title: '实践教学地址',

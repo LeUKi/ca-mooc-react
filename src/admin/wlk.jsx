@@ -176,7 +176,7 @@ class App extends React.Component {
                 title: '网络课内容',
                 dataIndex: 'onlineClass_destination',
                 align: 'center',
-
+                width: 700
             },
             {
                 title: '网络课地址',

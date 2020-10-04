@@ -157,12 +157,14 @@ class App extends React.Component {
                 title: '讲座主题',
                 dataIndex: 'lecture_title',
                 align: 'center',
+                width: 300
 
             },
             {
                 title: '讲座内容',
                 dataIndex: 'lecture_destination',
                 align: 'center',
+                width: 700
 
             },
             {

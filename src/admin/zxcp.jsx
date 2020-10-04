@@ -172,12 +172,14 @@ class App extends React.Component {
                 title: '在线测评主题',
                 dataIndex: 'onlineTest_title',
                 align: 'center',
+                width: 300
 
             },
             {
                 title: '在线测评内容',
                 dataIndex: 'onlineTest_destination',
                 align: 'center',
+                width: 700
 
             },
             {
