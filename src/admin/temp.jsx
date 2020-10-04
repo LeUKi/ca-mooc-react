@@ -1,237 +1,383 @@
+/* eslint-disable react/no-direct-mutation-state */
 import React from 'react';
+import { Table, Button, Modal, Input, message, Popconfirm, Tooltip } from 'antd';
+import axios from 'axios'
+import qs from 'qs'
+import {
+    EditOutlined,
+    DeleteOutlined,
+    PlusOutlined,
+    QuestionCircleOutlined
+} from '@ant-design/icons';
+const { TextArea } = Input;
 
-import 'antd/dist/antd.css';
-
-import { Table, Switch, Radio, Form, Space } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
-
-const columns = [
-    {
-        title: 'Name',
-        dataIndex: 'name',
-    },
-    {
-        title: 'Age',
-        dataIndex: 'age',
-        sorter: (a, b) => a.age - b.age,
-    },
-    {
-        title: 'Address',
-        dataIndex: 'address',
-        filters: [
-            {
-                text: 'London',
-                value: 'London',
-            },
-            {
-                text: 'New York',
-                value: 'New York',
-            },
-        ],
-        onFilter: (value, record) => record.address.indexOf(value) === 0,
-    },
-    {
-        title: 'Action',
-        key: 'action',
-        sorter: true,
-        render: () => (
-            <Space size="middle">
-                <a>Delete</a>
-                <a className="ant-dropdown-link">
-                    More actions <DownOutlined />
-                </a>
-            </Space>
-        ),
-    },
-];
-
-const data = [];
-for (let i = 1; i <= 10; i++) {
-    data.push({
-        key: i,
-        name: 'John Brown',
-        age: `${i}2`,
-        address: `New York No. ${i} Lake Park`,
-        description: `My name is John Brown, I am ${i}2 years old, living in New York No. ${i} Lake Park.`,
-    });
-}
-
-const expandable = { expandedRowRender: record => <p>{record.description}</p> };
-const title = () => 'Here is title';
-const showHeader = true;
-const footer = () => 'Here is footer';
-const pagination = { position: 'bottom' };
 
 class Demo extends React.Component {
     state = {
-        bordered: false,
-        loading: false,
-        pagination,
         size: 'default',
-        expandable,
-        scroll: undefined,
+        expandable:true,
         hasData: true,
-        tableLayout: undefined,
-        top: 'none',
-        bottom: 'bottomRight',
+        Newvisible: false,
+        Editvisible: false,
+        iNewvisible: false,
+        iEditvisible: false,
+        value_1: '',
+        value_2: '',
+        value_3: '',
     };
+    getDt = () => {
+        axios.get('http://118.178.125.139:8060/guest/interactionQuestion/findAll?page=0&size=99',).then(
+            res => {
+                const GGbefore = res.data.extended.InteractionQuestions.content;
+                const GGafter = []
+                GGbefore.map((GG, index) => {
+                    GGafter.push({
+                        key: index,
+                        qid: GG.qid,
+                        interactionQuestion_title: GG.interactionQuestion_title,
+                        interactionAnswers: GG.interactionAnswers,
+                        interactionQuestion_time: GG.interactionQuestion_time
+                    })
+                })
+                this.setState({
+                    getData: GGafter
+                });
+            }
+        )
+    }
 
-    handleToggle = prop => enable => {
-        this.setState({ [prop]: enable });
-    };
+    New = () => {
+        if (this.state.Newvisible === false) {
+            this.setState({
+                Newvisible: true
+            })
+        } else {
+            axios.post('http://118.178.125.139:8060/admin/lecture/add',
+                qs.stringify({
+                    'interactionQuestion_title': this.state.value_1,
+                    'lecture_destination': this.state.value_2
+                }),
+                {
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded',
+                        "token": sessionStorage.token
+                    }
+                }).then(res => {
+                    this.handleCancel()
+                    message.success('成功添加')
+                    this.getDt()
+                })
+        }
+    }
+    Edit = (id) => {
+        if (this.state.Editvisible === false) {
+            this.state.value_1 = this.state.getData.find(i => i.qid === id).interactionQuestion_title
+            this.state.value_2 = this.state.getData.find(i => i.qid === id).lecture_destination
+            this.state.value_3 = id
+            this.setState({
+                Editvisible: true
+            })
+        } else {
 
-    handleSizeChange = e => {
-        this.setState({ size: e.target.value });
-    };
+            axios.post('http://118.178.125.139:8060/admin/lecture/update',
+                qs.stringify({
+                    'lecture_destination': this.state.value_2,
+                    'interactionQuestion_title': this.state.value_1,
+                    'id': this.state.value_3
+                }),
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'token': sessionStorage.token
+                    }
+                }).then(res => {
+                    this.handleCancel()
+                    message.success('修改成功')
+                    this.getDt()
+                })
+        }
+    }
+    Del = (id) => {
+        axios.delete('http://118.178.125.139:8060/admin/lecture/deleteById?id=' + id,
+            {
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded',
+                    "token": sessionStorage.token
+                }
+            }).then(res => {
+                message.success('成功删除')
+                this.getDt()
+            })
+    }
 
-    handleTableLayoutChange = e => {
-        this.setState({ tableLayout: e.target.value });
-    };
 
-    handleExpandChange = enable => {
-        this.setState({ expandable: enable ? expandable : undefined });
-    };
+    iNew = (id) => {
+        if (this.state.Newvisible === false) {
+            this.setState({
+                Newvisible: true
+            })
+        } else {
+            axios.post('http://118.178.125.139:8060/admin/lecture/add',
+                qs.stringify({
+                    'interactionQuestion_title': this.state.value_1,
+                    'lecture_destination': this.state.value_2
+                }),
+                {
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded',
+                        "token": sessionStorage.token
+                    }
+                }).then(res => {
+                    this.handleCancel()
+                    message.success('成功添加')
+                    this.getDt()
+                })
+        }
+    }
+    iEdit = (id) => {
+        if (this.state.Editvisible === false) {
+            this.state.value_1 = this.state.getData.find(i => i.aid === id).interactionQuestion_title
+            this.state.value_2 = this.state.getData.find(i => i.aid === id).lecture_destination
+            this.state.value_3 = id
+            this.setState({
+                Editvisible: true
+            })
+        } else {
 
-    handleEllipsisChange = enable => {
-        this.setState({ ellipsis: enable });
-    };
+            axios.post('http://118.178.125.139:8060/admin/lecture/update',
+                qs.stringify({
+                    'lecture_destination': this.state.value_2,
+                    'interactionQuestion_title': this.state.value_1,
+                    'id': this.state.value_3
+                }),
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'token': sessionStorage.token
+                    }
+                }).then(res => {
+                    this.handleCancel()
+                    message.success('修改成功')
+                    this.getDt()
+                })
+        }
+    }
+    iDel = (id) => {
+        axios.delete('http://118.178.125.139:8060/admin/lecture/deleteById?id=' + id,
+            {
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded',
+                    "token": sessionStorage.token
+                }
+            }).then(res => {
+                message.success('成功删除')
+                this.getDt()
+            })
+    }
 
-    handleTitleChange = enable => {
-        this.setState({ title: enable ? title : undefined });
-    };
-
-    handleHeaderChange = enable => {
-        this.setState({ showHeader: enable ? showHeader : false });
-    };
-
-    handleFooterChange = enable => {
-        this.setState({ footer: enable ? footer : undefined });
-    };
-
-    handleRowSelectionChange = enable => {
-        this.setState({ rowSelection: enable ? {} : undefined });
-    };
-
-    handleYScrollChange = enable => {
-        this.setState({ yScroll: enable });
-    };
-
-    handleXScrollChange = e => {
-        this.setState({ xScroll: e.target.value });
-    };
-
-    handleDataChange = hasData => {
-        this.setState({ hasData });
-    };
+    handleCancel=()=>{
+        this.setState({
+            Newvisible: false,
+            Editvisible: false,
+            iNewvisible: false,
+            iEditvisible: false,
+            value_1: '',
+            value_2: '',
+            value_3: '',
+        })
+    }
+    componentWillMount() {
+        this.getDt()
+    }
 
     render() {
-        const { xScroll, yScroll, ...state } = this.state;
-
-        const scroll = {};
-        if (yScroll) {
-            scroll.y = 240;
-        }
-        if (xScroll) {
-            scroll.x = '100vw';
-        }
-
-        const tableColumns = columns.map(item => ({ ...item, ellipsis: state.ellipsis }));
-        if (xScroll === 'fixed') {
-            tableColumns[0].fixed = true;
-            tableColumns[tableColumns.length - 1].fixed = 'right';
-        }
+        const { ...state } = this.state;
+        const columns = [
+            {
+                title: 'id',
+                dataIndex: 'qid',
+            },
+            {
+                title: '提问内容',
+                align: 'center',
+        
+                dataIndex: 'interactionQuestion_title',
+            },
+            {
+                title: '提问时间',
+                align: 'center',
+                dataIndex: 'interactionQuestion_time',
+            },
+            {
+                title: '操作',
+                key: 'action',
+                align: 'right',
+                render: (record) => (
+                    <div>
+                        <Tooltip title={<span style={{ color: "black" }}>添加回复</span>} placement={'left'} color={'white'}>
+                            <Button
+                                icon={<PlusOutlined />}
+                                size='small'
+                                onClick={() => this.iNew(record.qid)} />
+                        </Tooltip>
+                        <br />
+                        <Tooltip title="编辑问题" placement={'left'} color={'blue'}>
+                            <Button
+                                type='primary'
+                                icon={<EditOutlined />}
+                                size='small'
+                                onClick={() => this.Edit(record.qid)} />
+                        </Tooltip>
+                        <br />
+                        <Popconfirm
+                            title="你确定吗？"
+                            okText='我确定'
+                            cancelText='取消'
+                            okType='danger'
+                            placement='left'
+                            onConfirm={() => this.Del(record.qid)}
+                            arrowPointAtCenter
+                            icon={<QuestionCircleOutlined
+                                style={{ color: 'red' }} />}>
+                            <Tooltip title="删除问题及回复" placement={'left'} color={'red'}>
+                                <Button
+                                    type='danger'
+                                    icon={<DeleteOutlined />}
+                                    size='small' />
+                            </Tooltip>
+                        </Popconfirm>
+                    </div>
+                ),
+            },
+        ];
+        const innercolumns = [
+            { title: 'id', dataIndex: 'aid' },
+            { title: '回复', dataIndex: 'answer', align: 'center' },
+            { title: '回复时间', dataIndex: 'interactionAnswer_time', align: 'center' },
+            {
+                title: '操作', key: 'action', align: 'right',
+                render: (record) => (
+                    <div>
+                        <Tooltip title="编辑回复" placement={'left'} color={'blue'}>
+                            <Button
+                                type='primary'
+                                icon={<EditOutlined />}
+                                size='small'
+                                onClick={() => { this.iEdit(record.aid) }} />
+                        </Tooltip>
+                        <br />
+                        <Popconfirm
+                            title="你确定吗？"
+                            okText='我确定'
+                            cancelText='取消'
+                            okType='danger'
+                            placement='left'
+                            onConfirm={() => this.iDel(record.aid)}
+                            arrowPointAtCenter
+                            icon={<QuestionCircleOutlined
+                                style={{ color: 'red' }} />}>
+                            <Tooltip title="删除回复" placement={'left'} color={'red'}>
+                                <Button
+                                    type='danger'
+                                    icon={<DeleteOutlined />}
+                                    size='small' />
+                            </Tooltip>
+                        </Popconfirm>
+                    </div>
+                )
+            }]
 
         return (
             <>
-                <Form
-                    layout="inline"
-                    className="components-table-demo-control-bar"
-                    style={{ marginBottom: 16 }}
-                >
-                    <Form.Item label="Bordered">
-                        <Switch checked={state.bordered} onChange={this.handleToggle('bordered')} />
-                    </Form.Item>
-                    <Form.Item label="loading">
-                        <Switch checked={state.loading} onChange={this.handleToggle('loading')} />
-                    </Form.Item>
-                    <Form.Item label="Title">
-                        <Switch checked={!!state.title} onChange={this.handleTitleChange} />
-                    </Form.Item>
-                    <Form.Item label="Column Header">
-                        <Switch checked={!!state.showHeader} onChange={this.handleHeaderChange} />
-                    </Form.Item>
-                    <Form.Item label="Footer">
-                        <Switch checked={!!state.footer} onChange={this.handleFooterChange} />
-                    </Form.Item>
-                    <Form.Item label="Expandable">
-                        <Switch checked={!!state.expandable} onChange={this.handleExpandChange} />
-                    </Form.Item>
-                    <Form.Item label="Checkbox">
-                        <Switch checked={!!state.rowSelection} onChange={this.handleRowSelectionChange} />
-                    </Form.Item>
-                    <Form.Item label="Fixed Header">
-                        <Switch checked={!!yScroll} onChange={this.handleYScrollChange} />
-                    </Form.Item>
-                    <Form.Item label="Has Data">
-                        <Switch checked={!!state.hasData} onChange={this.handleDataChange} />
-                    </Form.Item>
-                    <Form.Item label="Ellipsis">
-                        <Switch checked={!!state.ellipsis} onChange={this.handleEllipsisChange} />
-                    </Form.Item>
-                    <Form.Item label="Size">
-                        <Radio.Group value={state.size} onChange={this.handleSizeChange}>
-                            <Radio.Button value="default">Default</Radio.Button>
-                            <Radio.Button value="middle">Middle</Radio.Button>
-                            <Radio.Button value="small">Small</Radio.Button>
-                        </Radio.Group>
-                    </Form.Item>
-                    <Form.Item label="Table Scroll">
-                        <Radio.Group value={xScroll} onChange={this.handleXScrollChange}>
-                            <Radio.Button value={undefined}>Unset</Radio.Button>
-                            <Radio.Button value="scroll">Scroll</Radio.Button>
-                            <Radio.Button value="fixed">Fixed Columns</Radio.Button>
-                        </Radio.Group>
-                    </Form.Item>
-                    <Form.Item label="Table Layout">
-                        <Radio.Group value={state.tableLayout} onChange={this.handleTableLayoutChange}>
-                            <Radio.Button value={undefined}>Unset</Radio.Button>
-                            <Radio.Button value="fixed">Fixed</Radio.Button>
-                        </Radio.Group>
-                    </Form.Item>
-                    <Form.Item label="Pagination Top">
-                        <Radio.Group
-                            value={this.state.top}
-                            onChange={e => {
-                                this.setState({ top: e.target.value });
-                            }}
-                        >
-                            <Radio.Button value="topLeft">TopLeft</Radio.Button>
-                            <Radio.Button value="topCenter">TopCenter</Radio.Button>
-                            <Radio.Button value="topRight">TopRight</Radio.Button>
-                            <Radio.Button value="none">None</Radio.Button>
-                        </Radio.Group>
-                    </Form.Item>
-                    <Form.Item label="Pagination Bottom">
-                        <Radio.Group
-                            value={this.state.bottom}
-                            onChange={e => {
-                                this.setState({ bottom: e.target.value });
-                            }}
-                        >
-                            <Radio.Button value="bottomLeft">BottomLeft</Radio.Button>
-                            <Radio.Button value="bottomCenter">BottomCenter</Radio.Button>
-                            <Radio.Button value="bottomRight">BottomRight</Radio.Button>
-                            <Radio.Button value="none">None</Radio.Button>
-                        </Radio.Group>
-                    </Form.Item>
-                </Form>
+                <Button
+                    onClick={this.New}
+                    type="primary"
+                    icon={<PlusOutlined />}
+                    style={{ float: "right", marginBottom: '10px' }}>
+                    新建提问
+                </Button><h2>互动交流管理</h2>
                 <Table
-                    {...this.state}
-                    pagination={{ position: [this.state.top, this.state.bottom] }}
-                    columns={tableColumns}
-                    dataSource={state.hasData ? data : null}
-                    scroll={scroll}
+                    {...state}
+                    expandable={{expandedRowRender: (record) => {
+                        return <Table
+                            columns={innercolumns}
+                            dataSource={record.interactionAnswers}
+                            pagination={false}></Table>;
+                    }}}
+                    expandRowByClick={true}
+                    columns={columns}
+                    dataSource={this.state.getData}
                 />
+
+
+
+                <Modal
+                    title="新建提问"
+                    visible={this.state.Newvisible}
+                    okText='确认新建'
+                    cancelText='取消'
+                    onOk={this.New}
+                    onCancel={this.handleCancel}
+                >
+                    <TextArea
+                        onChange={({ target: { value } }) => { this.state.value_1 = value }}
+                        placeholder='提问内容...'
+                        autoSize>
+                    </TextArea>
+                </Modal>
+
+                <Modal
+                    destroyOnClose
+                    title="修改提问"
+                    visible={this.state.Editvisible}
+                    okText='确认修改'
+                    cancelText='取消'
+                    onOk={this.Edit}
+                    onCancel={this.handleCancel}
+                >
+                    <TextArea
+                        onChange={({ target: { value } }) => { this.state.value_1 = value }}
+                        defaultValue={this.state.value_1}
+                        placeholder='提问内容...'
+                        autoSize>
+                    </TextArea>
+                </Modal>
+
+
+
+
+                <Modal
+                    title="新建回复"
+                    visible={this.state.iNewvisible}
+                    okText='确认新建'
+                    cancelText='取消'
+                    onOk={this.iNew}
+                    onCancel={this.handleCancel}
+                >
+                    <TextArea
+                        onChange={({ target: { value } }) => { this.state.value_1 = value }}
+                        placeholder='回复内容...'
+                        autoSize>
+                    </TextArea>
+                </Modal>
+
+                <Modal
+                    destroyOnClose
+                    title="修改回复"
+                    visible={this.state.iEditvisible}
+                    okText='确认修改'
+                    cancelText='取消'
+                    onOk={this.iEdit}
+                    onCancel={this.handleCancel}
+                >
+                    <TextArea
+                        onChange={({ target: { value } }) => { this.state.value_1 = value }}
+                        defaultValue={this.state.value_1}
+                        placeholder='回复内容...'
+                        autoSize>
+                    </TextArea>
+                </Modal>
+
             </>
         );
     }
