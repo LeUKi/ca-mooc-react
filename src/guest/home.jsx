@@ -24,17 +24,12 @@ class Home extends React.Component {
                 const GGdata = res.data.extended.notices.content;
                 const temp = [];
                 GGdata.map((GG, index) => {
-                    temp.push(
-                        <Collapse
-                            defaultActiveKey={['0']}
-                            key={index}
-                            className={'Col'}
-                            accordion>
-                            <Panel header={GG.notice_title}>
-                                <p>{GG.notice_destination}</p>
-                                <p style={{ float: "right" }}>{GG.notice_time}</p>
-                            </Panel>
-                        </Collapse>)
+                    temp.push(<Panel
+                        header={GG.notice_title}
+                        key={index}>
+                        <p>{GG.notice_destination}</p>
+                        <p style={{ float: "right" }}>{GG.notice_time}</p>
+                    </Panel>)
                     this.setState({
                         GGlist: temp
                     });
@@ -77,7 +72,12 @@ class Home extends React.Component {
                 <p style={{ float: "right", marginBottom: 0 }}>{this.state.JJlist[2]}</p>
             </Card>
             <Card hoverable={true} className={'C1'} title="公告">
-                {this.state.GGlist}
+                <Collapse
+                    defaultActiveKey={['0']}
+                    className={'Col'}
+                    accordion>
+                    {this.state.GGlist}
+                </Collapse>
             </Card>
         </div>
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { HashRouter as Router, Route, Switch, Redirect, Link } from 'react-router-dom'
 import './guest.scss'
-
 import Home from './home'
 import Query from './query'
 import Zxcp from './zxcp'
@@ -9,10 +8,8 @@ import Kc from './kc'
 import Jz from './jz'
 import Sjjx from './sjjx'
 import Hdjl from './hdjl'
-
 import { createBrowserHistory } from 'history'
 import 'antd/dist/antd.css'
-
 import { Button, Menu, Tooltip, Affix } from 'antd';
 import {
   PlaySquareOutlined,
@@ -23,7 +20,6 @@ import {
   HomeOutlined,
   BookOutlined
 } from '@ant-design/icons';
-
 const history = createBrowserHistory()
 class Sider extends React.Component {
   state = {
@@ -48,17 +44,14 @@ class Sider extends React.Component {
           ><Link to={'/admin'}>去后台</Link></Button></Tooltip>)
     }
   }
-
   handleClick = e => {
     this.setState({
       current: e.key,
     });
   };
-
   render() {
     return (
       <div className={'noselect'}>
-
         <Menu
           style={{ backgroundColor: '#18324d', textAlign: "center" }}
           theme={this.state.theme}
@@ -79,11 +72,9 @@ class Sider extends React.Component {
     );
   }
 }
-
 class Guest extends React.Component {
   render() {
     return <div className="Guest" >
-
       <div className='banner noselect'>
         <div className='div'>
           <div className='text'>
@@ -110,8 +101,7 @@ class Guest extends React.Component {
           </Route>
         </Switch>
       </Router>
-
-      {/* <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer> */}
+      {/* <div style={{ textAlign: 'center', backgroundColor:'#F0F2F5' }}>电路分析精品课程</div> */}
     </div>
 
   }

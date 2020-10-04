@@ -29,12 +29,12 @@ class Query extends React.Component {
                                 <p>{item.case_library_destination}</p>
                                 <a target={'_blank'} rel="noopener noreferrer" href={'http://118.178.125.139:8060' + item.onlineTest_url}>
                                     <Button shape="round" icon={<VideoCameraOutlined />}>
-                                        {item.case_library_video}
+                                        {item.case_library_video.split('video/')[1]}
                                     </Button>
                                 </a>
                                 <a target={'_blank'} rel="noopener noreferrer" href={'http://118.178.125.139:8060' + item.case_library_text}>
                                     <Button shape="round" icon={<FilePptOutlined />}>
-                                        {item.case_library_text}
+                                        {item.case_library_text.split('ppt/')[1]}
                                     </Button>
                                 </a>
                                 <p style={{ float: "right" }}>{item.case_library_time}</p>

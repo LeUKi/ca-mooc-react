@@ -26,7 +26,7 @@ class Query extends React.Component {
                                 <p>{item.onlineTest_destination}</p>
                                 <a target={'_blank'} rel="noopener noreferrer" href={'http://118.178.125.139:8060'+item.onlineTest_url}>
                                     <Button shape="round" icon={<FileOutlined />}>
-                                        {item.onlineTest_url}
+                                        {item.onlineTest_url.split('test/')[1]}
                                     </Button>
                                 </a>
                                 <p style={{ float: "right" }}>{item.onlineTest_time}</p>
