@@ -1,13 +1,14 @@
 /* eslint-disable react/no-direct-mutation-state */
 /* eslint-disable array-callback-return */
 import React from 'react';
-import { Table, Button, Modal, Input, message, Popconfirm } from 'antd';
+import { Table, Button, Modal, Input, message, Popconfirm, Tooltip } from 'antd';
 import axios from 'axios'
 import qs from 'qs'
 import {
     EditOutlined,
     DeleteOutlined,
     PlusOutlined,
+    LinkOutlined,
     QuestionCircleOutlined
 } from '@ant-design/icons';
 const { TextArea } = Input;
@@ -37,7 +38,12 @@ class App extends React.Component {
                         key: index,
                         ocid: GG.ocid,
                         onlineClass_title: GG.onlineClass_title,
-                        onlineClass_url: GG.onlineClass_url,
+                        onlineClass_url: (
+                            <Tooltip title={GG.onlineClass_url}>
+                                <Button type={"link"}
+                                    icon={<LinkOutlined />}
+                                    href={GG.onlineClass_url} />
+                            </Tooltip>),
                         onlineClass_destination: GG.onlineClass_destination,
                         onlineClass_time: GG.onlineClass_time,
                         Actions: (<div>

@@ -1,16 +1,18 @@
 /* eslint-disable react/no-direct-mutation-state */
 /* eslint-disable array-callback-return */
 import React from 'react';
-import { Table, Button, Modal, Input, message, Popconfirm } from 'antd';
+import { Table, Button, Modal, Input, message, Popconfirm, Tooltip } from 'antd';
 import axios from 'axios'
 import {
     EditOutlined,
     DeleteOutlined,
     PlusOutlined,
+    VideoCameraOutlined,
+    FilePptOutlined,
     QuestionCircleOutlined,
 } from '@ant-design/icons';
 const { TextArea } = Input;
-
+const url = 'http://118.178.125.139:8060';
 
 class App extends React.Component {
     state = {
@@ -38,8 +40,18 @@ class App extends React.Component {
                         key: index,
                         cid: GG.cid,
                         case_library_title: GG.case_library_title,
-                        case_library_video: GG.case_library_video,
-                        case_library_text: GG.case_library_video,
+                        case_library_video: (
+                            <Tooltip title={GG.case_library_video}>
+                                <Button type={"link"}
+                                    icon={<VideoCameraOutlined />}
+                                    href={GG.case_library_video} />
+                            </Tooltip>),
+                        case_library_text: (
+                            <Tooltip title={GG.case_library_text}>
+                                <Button type={"link"}
+                                    icon={<FilePptOutlined />}
+                                    href={GG.case_library_text} />
+                            </Tooltip>),
                         case_library_destination: GG.case_library_destination,
                         case_library_time: GG.case_library_time,
                         Actions: (<div>
@@ -103,7 +115,7 @@ class App extends React.Component {
                     message.success('成功添加')
                     this.getDt()
                 }).catch(
-                    (res)=>{
+                    (res) => {
                         console.log(res);
                     }
                 )
@@ -180,21 +192,21 @@ class App extends React.Component {
             {
                 title: '课程内容',
                 dataIndex: 'case_library_destination',
-                width: '20%'
+
             },
             {
                 title: '课程视频',
                 dataIndex: 'case_library_video',
-                width: '5%'
+
             }, {
                 title: '课程教案',
                 dataIndex: 'case_library_text',
-                width: '5%'
+
             },
             {
                 title: '课程时间',
                 dataIndex: 'case_library_time',
-                width: '15%'
+
             }, {
                 title: '操作',
                 dataIndex: 'Actions',
@@ -210,6 +222,7 @@ class App extends React.Component {
                 新建
                 </Button><h2>课程信息管理</h2>
             <Table
+                scroll={{ x: true }}
                 dataSource={this.state.getData}
                 columns={columns}
                 bordered={true}

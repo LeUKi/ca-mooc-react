@@ -1,13 +1,14 @@
 /* eslint-disable react/no-direct-mutation-state */
 /* eslint-disable array-callback-return */
 import React from 'react';
-import { Table, Button, Modal, Input, message, Popconfirm } from 'antd';
+import { Table, Button, Modal, Input, message, Popconfirm, Tooltip } from 'antd';
 import axios from 'axios'
 import qs from 'qs'
 import {
     EditOutlined,
     DeleteOutlined,
     PlusOutlined,
+    LinkOutlined,
     QuestionCircleOutlined
 } from '@ant-design/icons';
 const { TextArea } = Input;
@@ -37,7 +38,12 @@ class App extends React.Component {
                         key: index,
                         pid: GG.pid,
                         practicalTeach_title: GG.practicalTeach_title,
-                        practicalTeach_url: GG.practicalTeach_url,
+                        practicalTeach_url: (
+                            <Tooltip title={GG.practicalTeach_url}>
+                                <Button type={"link"}
+                                    icon={<LinkOutlined />}
+                                    href={GG.practicalTeach_url} />
+                            </Tooltip>),
                         practicalTeach_destination: GG.practicalTeach_destination,
                         practicalTeach_time: GG.practicalTeach_time,
                         Actions: (<div>
@@ -157,31 +163,30 @@ class App extends React.Component {
             {
                 title: 'id',
                 dataIndex: 'pid',
-                width: 1
+
             },
             {
                 title: '实践教学主题',
                 dataIndex: 'practicalTeach_title',
-                width: '13%'
+
             },
             {
                 title: '实践教学内容',
                 dataIndex: 'practicalTeach_destination',
-                width: '40%'
+
             },
             {
                 title: '实践教学地址',
                 dataIndex: 'practicalTeach_url',
-                width: '20%'
             },
             {
                 title: '实践教学时间',
                 dataIndex: 'practicalTeach_time',
-                width: '15%'
+
             }, {
                 title: '操作',
                 dataIndex: 'Actions',
-                width: 1
+
             },
         ];
         return (<>

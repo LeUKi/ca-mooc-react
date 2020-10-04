@@ -1,16 +1,17 @@
 /* eslint-disable react/no-direct-mutation-state */
 /* eslint-disable array-callback-return */
 import React from 'react';
-import { Table, Button, Modal, Input, message, Popconfirm } from 'antd';
+import { Table, Button, Modal, Input, message, Popconfirm, Tooltip } from 'antd';
 import axios from 'axios'
 import {
     EditOutlined,
     DeleteOutlined,
     PlusOutlined,
+    FileOutlined,
     QuestionCircleOutlined,
 } from '@ant-design/icons';
 const { TextArea } = Input;
-
+const url = 'http://118.178.125.139:8060';
 
 class App extends React.Component {
     state = {
@@ -38,7 +39,12 @@ class App extends React.Component {
                         key: index,
                         oid: GG.oid,
                         onlineTest_title: GG.onlineTest_title,
-                        onlineTest_url: GG.onlineTest_url,
+                        onlineTest_url: (
+                            <Tooltip title={GG.onlineTest_url}>
+                                <Button type={"link"}
+                                    icon={<FileOutlined />}
+                                    href={url+GG.onlineTest_url} />
+                            </Tooltip>),
                         onlineTest_destination: GG.onlineTest_destination,
                         onlineTest_time: GG.onlineTest_time,
                         Actions: (<div>
@@ -167,22 +173,22 @@ class App extends React.Component {
             {
                 title: '在线测评主题',
                 dataIndex: 'onlineTest_title',
-                width: '13%'
+
             },
             {
                 title: '在线测评内容',
                 dataIndex: 'onlineTest_destination',
-                width: '40%'
+
             },
             {
                 title: '在线测评地址',
                 dataIndex: 'onlineTest_url',
-                width: '20%'
+
             },
             {
                 title: '在线测评时间',
                 dataIndex: 'onlineTest_time',
-                width: '15%'
+
             }, {
                 title: '操作',
                 dataIndex: 'Actions',
