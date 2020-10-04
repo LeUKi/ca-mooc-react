@@ -162,22 +162,22 @@ class App extends React.Component {
             {
                 title: '网络课主题',
                 dataIndex: 'onlineClass_title',
-                width: '13%'
+
             },
             {
                 title: '网络课内容',
                 dataIndex: 'onlineClass_destination',
-                width: '40%'
+
             },
             {
                 title: '网络课地址',
                 dataIndex: 'onlineClass_url',
-                width: '20%'
+
             },
             {
                 title: '网络课时间',
                 dataIndex: 'onlineClass_time',
-                width: '15%'
+
             }, {
                 title: '操作',
                 dataIndex: 'Actions',

@@ -1,4 +1,5 @@
 /* eslint-disable react/no-direct-mutation-state */
+/* eslint-disable array-callback-return */
 import React from 'react';
 import { Table, Button, Modal, Input, message, Popconfirm, Tooltip } from 'antd';
 import axios from 'axios'
@@ -26,8 +27,8 @@ class Demo extends React.Component {
         value_3: '',
     };
     getDt = () => {
-        axios.get('http://118.178.125.139:8060/guest/interactionQuestion/findAll?page=0&size=99',).then(
-            res => {
+        axios.get('http://118.178.125.139:8060/guest/interactionQuestion/findAll?page=0&size=99',)
+            .then(res => {
                 const GGbefore = res.data.extended.InteractionQuestions.content;
                 const GGafter = []
                 GGbefore.map((GG, index) => {
@@ -43,10 +44,10 @@ class Demo extends React.Component {
                     getData: GGafter
                 });
             }
-        )
+            )
     }
 
-    New = () => {   
+    New = () => {
         if (this.state.Newvisible === false) {
             this.setState({
                 Newvisible: true
