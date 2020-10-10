@@ -27,7 +27,7 @@ class Query extends React.Component {
                                     <Tag style={{ float: "right" }}>id:{item.cid}</Tag>
                                     {item.case_library_title}</h3>
                                 <p>{item.case_library_destination}</p>
-                                <a target={'_blank'} rel="noopener noreferrer" href={'http://118.178.125.139:8060' + item.onlineTest_url}>
+                                <a target={'_blank'} rel="noopener noreferrer" href={'http://118.178.125.139:8060' + item.case_library_video}>
                                     <Button shape="round" icon={<VideoCameraOutlined />}>
                                         {item.case_library_video.split('video/')[1]}
                                     </Button>

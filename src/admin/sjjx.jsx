@@ -110,7 +110,7 @@ class App extends React.Component {
             this.state.value_1 = this.state.getData.find(i => i.pid === id).practicalTeach_title;
             this.state.value_2 = this.state.getData.find(i => i.pid === id).practicalTeach_destination;
             this.state.value_3 = id;
-            this.state.value_4 = this.state.getData.find(i => i.pid === id).practicalTeach_url;
+            this.state.value_4 = this.state.getData.find(i => i.pid === id).practicalTeach_url.props.title;
             this.setState({
                 Editvisible: true
             })
@@ -228,7 +228,7 @@ class App extends React.Component {
                 </TextArea>
                 <TextArea
                     onChange={({ target: { value } }) => { this.state.value_4 = value }}
-                    placeholder='实践教学地址...'
+                    placeholder='(http://...)实践教学地址...'
                     autoSize>
                 </TextArea>
             </Modal>

@@ -232,7 +232,7 @@ class App extends React.Component {
                     autoSize={{ minRows: 2 }}>
                 </TextArea>
                 <Input
-                    addonBefore="评测文件"
+                    addonBefore="测评文件"
                     type="file"></Input>
             </Modal>
 
@@ -258,7 +258,7 @@ class App extends React.Component {
                     autoSize={{ minRows: 2 }}>
                 </TextArea>
                 <Input
-                    addonBefore="评测文件"
+                    addonBefore="测评文件"
                     type="file"></Input>
             </Modal>
         </>)

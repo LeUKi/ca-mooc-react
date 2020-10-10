@@ -29,7 +29,7 @@ class App extends React.Component {
         this.getDt()
     }
     getDt = () => {
-        axios.get(url+'/guest/onlineClass/findAll?page=0&size=99',).then(
+        axios.get(url + '/guest/onlineClass/findAll?page=0&size=99',).then(
             res => {
                 const GGbefore = res.data.extended.OnlineClasss.content;
                 const GGafter = []
@@ -47,7 +47,7 @@ class App extends React.Component {
                         onlineClass_destination: GG.onlineClass_destination,
                         onlineClass_time: GG.onlineClass_time,
                         Actions: (<div>
-                           <Tooltip title="编辑" placement={'left'} color={'blue'}>
+                            <Tooltip title="编辑" placement={'left'} color={'blue'}>
                                 <Button
                                     type='primary'
                                     icon={<EditOutlined />}
@@ -87,7 +87,7 @@ class App extends React.Component {
                 Newvisible: true
             })
         } else {
-            axios.post(url+'/admin/onlineClass/add',
+            axios.post(url + '/admin/onlineClass/add',
                 qs.stringify({
                     'onlineClass_title': this.state.value_1,
                     'onlineClass_destination': this.state.value_2,
@@ -107,16 +107,17 @@ class App extends React.Component {
     }
     Edit = (id) => {
         if (this.state.Editvisible === false) {
-            this.state.value_1 = this.state.getData.find(i => i.ocid === id).onlineClass_title;
-            this.state.value_2 = this.state.getData.find(i => i.ocid === id).onlineClass_destination;
+            const temp = this.state.getData.find(i => i.ocid === id)
+            this.state.value_1 = temp.onlineClass_title;
+            this.state.value_2 = temp.onlineClass_destination;
             this.state.value_3 = id;
-            this.state.value_4 = this.state.getData.find(i => i.ocid === id).onlineClass_url;
+            this.state.value_4 = temp.onlineClass_url.props.title;
             this.setState({
                 Editvisible: true
             })
         } else {
 
-            axios.post(url+'/admin/onlineClass/update',
+            axios.post(url + '/admin/onlineClass/update',
                 qs.stringify({
                     'onlineClass_title': this.state.value_1,
                     'onlineClass_destination': this.state.value_2,
@@ -136,7 +137,7 @@ class App extends React.Component {
         }
     }
     Del = (id) => {
-        axios.delete(url+'/admin/onlineClass/deleteById?id=' + id,
+        axios.delete(url + '/admin/onlineClass/deleteById?id=' + id,
             {
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded',
@@ -228,7 +229,7 @@ class App extends React.Component {
                 </TextArea>
                 <TextArea
                     onChange={({ target: { value } }) => { this.state.value_4 = value }}
-                    placeholder='网络课地址...'
+                    placeholder='(http://...)网络课地址...'
                     autoSize>
                 </TextArea>
             </Modal>
